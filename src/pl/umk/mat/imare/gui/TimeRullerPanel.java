@@ -24,7 +24,7 @@ public class TimeRullerPanel extends JPanel {
 	private StavePanel stavePanel;
 	private DecimalFormat secFormat = new DecimalFormat("00");
 
-	public TimeRullerPanel(StavePanel stavePanel) {
+	public TimeRullerPanel(StavePanel stavePanel) { 
 		this.stavePanel = stavePanel;
 		setBackground(Color.white);
 		setForeground(Color.black);

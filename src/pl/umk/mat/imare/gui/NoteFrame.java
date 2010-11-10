@@ -10,12 +10,6 @@
  */
 package pl.umk.mat.imare.gui;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.pdf.PdfContentByte;
-import com.itextpdf.text.pdf.PdfTemplate;
-import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -39,7 +33,6 @@ import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JViewport;
-import pl.umk.mat.imare.io.ProgressListener;
 import pl.umk.mat.imare.midi.MidiPlayer;
 import pl.umk.mat.imare.midi.MidiPlayerListener;
 import pl.umk.mat.imare.reco.StaveData;
@@ -55,129 +48,6 @@ public class NoteFrame extends javax.swing.JInternalFrame implements MetaEventLi
     private JPanel cursorPanel = null;
     private BufferedImage timeImage = null;
     private String previnstrument = "";
-
-    public void exportPDF(ProgressFrame listenframe) {
-        final ProgressListener listen=listenframe;
-        JFileChooser fc = new JFileChooser();
-        fc.setFileFilter(new javax.swing.filechooser.FileFilter() {
-
-            @Override
-            public boolean accept(File f) {
-                return f.getName().endsWith(".pdf") || f.isDirectory();
-            }
-
-            @Override
-            public String getDescription() {
-                return "Plik PDF (*.pdf)";
-            }
-        });
-
-        switch (fc.showSaveDialog(this)) {
-            case JFileChooser.CANCEL_OPTION:
-                return;
-        }
-        File f = fc.getSelectedFile();
-
-        if (!f.getName().endsWith(".pdf")) {
-            f = new File(f.getAbsolutePath() + ".pdf");
-        }
-        if (f.exists()) {
-            if (JOptionPane.showConfirmDialog(this,
-                    "Czy nadpisać istniejący plik?") == JOptionPane.NO_OPTION) {
-                return;
-            }
-        }
-		
-        final File file=f;
-        Runnable ru = new Runnable() {
-
-            @Override
-            public void run() {
-                listen.jobStarted(this);
-                int lmargin = 30, rmargin = 30, tmargin = 50, bmargin = 50, smargin = 10;
-                int n = 2;
-                int w = 595, h = 842;
-                while (tmargin + bmargin + stavePanel.getTotalHeight() > n * h) {
-                    n++;
-                }
-                Document document = new Document();
-                w *= n;
-                h *= n;
-                Rectangle r = new Rectangle(0, 0, w, h);
-                document.setPageSize(r);
-                try {
-                    BufferedImage buff = new BufferedImage(w - (lmargin + rmargin),
-                            stavePanel.getTotalHeight(), BufferedImage.TYPE_INT_ARGB);
-
-                    Graphics g = buff.getGraphics();
-                    g.setColor(stavePanel.getBackground());
-
-                    /*g.clearRect(0, 0, buff.getWidth(), buff.getHeight());
-
-                    g.setClip(0, 0, buff.getWidth(), buff.getHeight());
-
-                    stavePanel.paint(g);
-                    g.dispose();*/
-
-                    PdfWriter writer;
-                    writer = PdfWriter.getInstance(document, new FileOutputStream(file));
-                    document.open();
-
-                    int x = 0, y = tmargin;
-                    PdfContentByte cb = writer.getDirectContent();
-                    int id = 0;
-                    while (x < stavePanel.getWidth()) {
-                        id++;
-                        if (y + stavePanel.getTotalHeight() > h - bmargin) {
-                            document.newPage();
-                            //writer.newPage();
-                            y = tmargin;
-                        }
-                        int wid = w - (lmargin + rmargin);
-                        PdfTemplate tp = cb.createTemplate(wid, stavePanel.getTotalHeight());
-                        Graphics2D g2;
-                        g2 = tp.createGraphicsShapes(wid, stavePanel.getTotalHeight());
-                        g2.setColor(Color.white);
-                        g2.fillRect(0, 0, wid, stavePanel.getTotalHeight());
-
-                        g.setClip(x, 0, buff.getWidth(), buff.getHeight());
-
-                        /*try {
-                        ImageIO.write(buff, "png", new File("a" + id + ".png"));
-                        } catch (IOException ex) {
-                        Logger.getLogger(NoteFrame.class.getName()).log(Level.SEVERE, null, ex);
-                        }*/
-                        g.setColor(stavePanel.getBackground());
-                        g.fillRect(x, 0, buff.getWidth(), buff.getHeight());
-                        stavePanel.print(g);
-                        g.translate(-buff.getWidth(), 0);
-
-                        g2.drawImage(buff, null, 0, 0);
-
-                        g2.dispose();
-                        cb.addTemplate(tp, lmargin, h - (y + stavePanel.getTotalHeight()));
-
-                        y += stavePanel.getTotalHeight() + smargin;
-                        x += wid;
-                        listen.jobProgress(this, (float)x/(float)stavePanel.getWidth());
-                    }
-                    g.dispose();
-                } catch (DocumentException ex) {
-                    //Logger.getLogger(NoteFrame.class.getName()).log(Level.SEVERE, null, ex);
-                  JOptionPane.showMessageDialog(null, "Nie można utworzyć pliku", "Nie można utworzyć pliku", JOptionPane.ERROR_MESSAGE);
-                } catch (FileNotFoundException ex) {
-                    //Logger.getLogger(NoteFrame.class.getName()).log(Level.SEVERE, null, ex);
-                  JOptionPane.showMessageDialog(null, "Nie można utworzyć pliku", "Nie można utworzyć pliku", JOptionPane.ERROR_MESSAGE);
-                }
-                document.close();
-                listen.jobFinished(this);
-            }
-        };
-        Thread thread=new Thread(ru);
-        thread.setDaemon(true);
-        listenframe.setVisible(true);
-        thread.start();
-    }
 
     public void exportMidi() {
         if (instrumentComboBox.isEnabled()) {

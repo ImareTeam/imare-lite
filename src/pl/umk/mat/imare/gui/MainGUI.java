@@ -165,7 +165,6 @@ public class MainGUI extends javax.swing.JFrame implements ProgressListener {
         miOpenWave = new javax.swing.JMenuItem();
         mRecentItems = new javax.swing.JMenu();
         miExport = new javax.swing.JMenu();
-        miExportToPDF = new javax.swing.JMenuItem();
         miExportToMIDI = new javax.swing.JMenuItem();
         miLilypond = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
@@ -351,14 +350,6 @@ public class MainGUI extends javax.swing.JFrame implements ProgressListener {
         fileMenu.add(mRecentItems);
 
         miExport.setText("Eksport");
-
-        miExportToPDF.setText("PDF");
-        miExportToPDF.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miExportToPDFActionPerformed(evt);
-            }
-        });
-        miExport.add(miExportToPDF);
 
         miExportToMIDI.setText("MIDI");
         miExportToMIDI.addActionListener(new java.awt.event.ActionListener() {
@@ -984,14 +975,6 @@ public class MainGUI extends javax.swing.JFrame implements ProgressListener {
 																	layoutWindowsCascade();
 																}//GEN-LAST:event_miLayoutCascadeActionPerformed
 
-																private void miExportToPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miExportToPDFActionPerformed
-																	if (noteFrame != null) {
-																		ProgressFrame prog = new ProgressFrame("Trwa eksportowanie...", null);
-																		addFrame(prog, false);
-																		noteFrame.exportPDF(prog);
-																	}
-																}//GEN-LAST:event_miExportToPDFActionPerformed
-
 																private void miRealTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRealTimeActionPerformed
 																	addFrame(new RealtimeFrame(), true);
 																}//GEN-LAST:event_miRealTimeActionPerformed
@@ -1061,19 +1044,6 @@ public class MainGUI extends javax.swing.JFrame implements ProgressListener {
 		} catch (IOException ex) {
 			Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
 		}
-//
-//		try {
-//			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//		} catch (UnsupportedLookAndFeelException ex) {
-//			Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
-//		} catch (ClassNotFoundException ex) {
-//			Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
-//		} catch (InstantiationException ex) {
-//			Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
-//		} catch (IllegalAccessException ex) {
-//			Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
-//		}
-
 
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
@@ -1117,7 +1087,6 @@ public class MainGUI extends javax.swing.JFrame implements ProgressListener {
     private javax.swing.JMenuItem miCloseProject;
     private javax.swing.JMenu miExport;
     private javax.swing.JMenuItem miExportToMIDI;
-    private javax.swing.JMenuItem miExportToPDF;
     private javax.swing.JMenuItem miLayoutCascade;
     private javax.swing.JMenuItem miLayoutHorizontally;
     private javax.swing.JMenuItem miLayoutVertically;
@@ -1242,84 +1211,6 @@ public class MainGUI extends javax.swing.JFrame implements ProgressListener {
 		projectProgressPane1.setVisible(show);
 	}
 
-	/**
-	 * Pokazuje okienko otwierania pliku WAVE i
-	 * potem ładuje go do pamięci.
-	 */
-//	public void openWaveFile(boolean openAfterLoad) {
-//		JFileChooser fc = new JFileChooser();
-//		fc.setFileFilter(new javax.swing.filechooser.FileFilter() {
-//
-//			@Override
-//			public boolean accept(File f) {
-//				return f.getName().endsWith(".wav")
-//						|| f.getName().endsWith(".mp3")
-//						|| f.isDirectory();
-//			}
-//
-//			@Override
-//			public String getDescription() {
-//				return "Obsługiwane formaty (*.wav, *.mp3)";
-//			}
-//		});
-//
-//		String[] s = Config.read("RecentWaveDirectory");
-//		if (!s[0].equals("0")) {
-//			fc.setCurrentDirectory(new File(s[0]));
-//		}
-//
-//		int res = fc.showOpenDialog(this);
-//		if (res == JFileChooser.APPROVE_OPTION) {
-//			final File f = fc.getSelectedFile();
-//			Config.write("RecentWaveDirectory", fc.getCurrentDirectory().getPath());
-//			try {
-//				final ProgressFrame pf = new ProgressFrame(this);
-//				if (openedWave == null) {
-//					addFrame(pf, true);
-//
-//
-//					Runnable r = new Runnable() {
-//
-//						@Override
-//						public void run() {
-//							try {
-//								Wave wave = Wave.create(f, pf);
-//								setOpenedWave(wave);
-//							} catch (FileDoesNotExistException ex) {
-//								Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
-//							} catch (UnsupportedAudioFileException ex) {
-//								Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
-//							} catch (IOException ex) {
-//								Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
-//							}
-//						}
-//					};
-//					try {
-//						//					setOpenedWave(wave);
-//						this.wait();
-//					} catch (InterruptedException ex) {
-//						Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
-//					}
-//
-//					if (openAfterLoad) {
-//						showWaveFrame();
-//					}
-//				} else {
-//					Wave justOpened = Wave.create(f, pf);
-//					MainGUI newMain = new MainGUI(justOpened, null);
-//					newMain.addFrame(pf, true);
-//					newMain.setVisible(true);
-//				}
-//			} catch (FileDoesNotExistException ex) {
-//				Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
-//			} catch (UnsupportedAudioFileException ex) {
-//				Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
-//			} catch (IOException ex) {
-//				Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
-//			}
-//			enableSaveButtons();
-//		}
-//	}
 	public NoteFrame getNoteFrame() {
 		return noteFrame;
 	}

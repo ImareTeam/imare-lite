@@ -72,14 +72,6 @@
                 <Property name="text" type="java.lang.String" value="Eksport"/>
               </Properties>
               <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="miExportToPDF">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="PDF"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miExportToPDFActionPerformed"/>
-                  </Events>
-                </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="miExportToMIDI">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="MIDI"/>
