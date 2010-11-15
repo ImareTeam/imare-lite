@@ -130,4 +130,8 @@ public class ProgressFrame extends javax.swing.JInternalFrame implements Progres
 		dispose();
 	}
 
+    @Override
+    public void jobFailed(Object o, String string) {
+    }
+
 }

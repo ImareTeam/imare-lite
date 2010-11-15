@@ -1441,4 +1441,8 @@ public class MainGUI extends javax.swing.JFrame implements ProgressListener {
 
 		progressFrame = null;
 	}
+
+    @Override
+    public void jobFailed(Object o, String string) {
+    }
 }

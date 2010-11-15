@@ -11,24 +11,21 @@
 
 package pl.umk.mat.imare.gui;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import pl.umk.mat.imare.exception.FileDoesNotExistException;
-import pl.umk.mat.imare.io.ProgressListener;
 import pl.umk.mat.imare.io.Wave;
 
 /**
  *
  * @author PieterEr
  */
-public class WaveFrame extends javax.swing.JFrame {
+public class WaveFrame extends javax.swing.JInternalFrame {
 
-    /** Creates new form ClientWindow */
-    public WaveFrame() {
+    private final Wave wave;
+
+    /** Creates new form WaveFrame */
+    public WaveFrame(Wave wave) {
         initComponents();
+        this.wave = wave;
+        displayer.loadWave(wave);
     }
 
     /** This method is called from within the constructor to
@@ -40,17 +37,9 @@ public class WaveFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        waveDisplayer1 = new pl.umk.mat.imare.gui.WaveDisplayer();
+        displayer = new pl.umk.mat.imare.gui.WaveDisplayer();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -58,57 +47,22 @@ public class WaveFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(waveDisplayer1, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
-                    .addComponent(jButton1))
+                .addComponent(displayer, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(waveDisplayer1, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
+                .addGap(39, 39, 39)
+                .addComponent(displayer, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        File f = new File("D:\\wings.mp3");
-        try {
-            Wave.create(f, new ProgressListener() {
-
-                @Override
-                public void jobStarted(Object o) {
-                    //throw new UnsupportedOperationException("Not supported yet.");
-                }
-
-                @Override
-                public void jobProgress(Object o, float f) {
-                    //throw new UnsupportedOperationException("Not supported yet.");
-                }
-
-                @Override
-                public void jobFinished(Object o) {
-                    if (o instanceof Wave) {
-                        waveDisplayer1.loadWave((Wave)o);
-                    }
-                }
-            });
-        } catch (FileDoesNotExistException ex) {
-            Logger.getLogger(WaveFrame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedAudioFileException ex) {
-            Logger.getLogger(WaveFrame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(WaveFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private pl.umk.mat.imare.gui.WaveDisplayer waveDisplayer1;
+    private pl.umk.mat.imare.gui.WaveDisplayer displayer;
     // End of variables declaration//GEN-END:variables
 
 }

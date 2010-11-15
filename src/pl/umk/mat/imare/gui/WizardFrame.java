@@ -604,4 +604,8 @@ public class WizardFrame extends javax.swing.JInternalFrame implements ProjectPa
 		wavePanel1.setWave((Wave)sender);
 		mainWindow.jobFinished(sender);
 	}
+
+    @Override
+    public void jobFailed(Object o, String string) {
+    }
 }
