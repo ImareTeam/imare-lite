@@ -11,9 +11,7 @@
 
 package pl.umk.mat.imare.gui;
 
-import java.awt.Component;
-import java.util.LinkedList;
-import pl.umk.mat.imare.gui.related.RecognitionProgressListener;
+import javax.swing.JDesktopPane;
 import pl.umk.mat.imare.reco.RecognitionListener;
 import pl.umk.mat.imare.reco.Recognizer;
 import pl.umk.mat.imare.reco.Transcriber;
@@ -25,19 +23,17 @@ import pl.umk.mat.imare.reco.TranscriptionListener;
  */
 public class RecognitionProgress extends javax.swing.JInternalFrame implements RecognitionListener, TranscriptionListener {
 
-	private LinkedList<RecognitionProgressListener> listeners = new LinkedList<RecognitionProgressListener>();
-
-	private MainGUI mainWindow = null;
-    private Recognizer recognizer = null;
-    private Transcriber transcriber = null;
-	private boolean showNotesAfter = true;
+  private JDesktopPane pane = null;
+  private final Recognizer recognizer;
+  private Transcriber transcriber = null;
+  private final String filename;
 
     /** Creates new form RecognitionProgress */
-    public RecognitionProgress(Recognizer recognizer, boolean showNotesAfter) {
-        this.recognizer = recognizer;
-        this.recognizer.addRecognitionListener(this);
-		this.showNotesAfter = showNotesAfter;
-        initComponents();		
+    public RecognitionProgress(String filename, Recognizer recognizer, boolean showNotesAfter) {
+      this.recognizer = recognizer;
+      this.recognizer.addRecognitionListener(this);
+      this.filename = filename;
+      initComponents();
     }
 
     /** This method is called from within the constructor to
@@ -99,14 +95,10 @@ public class RecognitionProgress extends javax.swing.JInternalFrame implements R
 	}//GEN-LAST:event_cancelButtonActionPerformed
 
 	private void formAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_formAncestorAdded
-		Component c = getDesktopPane();
-		while(!(c instanceof MainGUI) && c != null) c = c.getParent();
-
-		if(c != null) mainWindow = (MainGUI)c;
-
-		int x = (getDesktopPane().getWidth() - getWidth()) / 2;
-		int y = (getDesktopPane().getHeight() - getHeight()) / 2;
-		setLocation(x, y);
+    pane = getDesktopPane();
+    int x = (getDesktopPane().getWidth() - getWidth()) / 2;
+    int y = (getDesktopPane().getHeight() - getHeight()) / 2;
+    setLocation(x, y);
 	}//GEN-LAST:event_formAncestorAdded
 
 
@@ -115,58 +107,45 @@ public class RecognitionProgress extends javax.swing.JInternalFrame implements R
     private javax.swing.JProgressBar recognitionProgressBar;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void recognitionFinished(Recognizer recognizer, boolean cancelled) {
-		if(cancelled) {
-			dispose();
-			notifyCancelled();
-			return;
-		}
-		setTitle("Transkrypcja...");
-        this.transcriber = new Transcriber(recognizer.getVoice());
-        transcriber.addTranscriptionListener(this);
-        transcriber.run();
+  @Override
+  public void recognitionFinished(Recognizer recognizer, boolean cancelled) {
+    if (cancelled) {
+      dispose();
+      return;
     }
+    setTitle("Transkrypcja...");
+    this.transcriber = new Transcriber(recognizer.getVoice());
+    transcriber.addTranscriptionListener(this);
+    transcriber.run();
+  }
 
-    @Override
-    public void progressChanged(Recognizer recognizer, final float newProgress) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                recognitionProgressBar.setValue((int) (newProgress * recognitionProgressBar.getMaximum()));
-            }
-        });        
+  @Override
+  public void progressChanged(Recognizer recognizer, final float newProgress) {
+    java.awt.EventQueue.invokeLater(new Runnable() {
+
+      @Override
+      public void run() {
+        recognitionProgressBar.setValue((int) (newProgress * recognitionProgressBar.getMaximum()));
+      }
+    });
+  }
+
+  @Override
+  public void transcriptionFinished(Transcriber transcriber) {
+
+    NoteFrame notes = new NoteFrame();
+    notes.setNotes(transcriber.getStaveData());
+    if (pane != null) {
+      pane.add(notes);
+      notes.setTitle(filename+" (zapis nutowy)");
+      notes.setVisible(true);
+      pane.validate();
     }
+    //notes.setVisible(true);
+    this.dispose();
+  }
 
-    @Override
-    public void transcriptionFinished(Transcriber transcriber) {
-        mainWindow.setNotes(transcriber.getStaveData());
-        if(showNotesAfter) mainWindow.showNoteFrame();
-        this.dispose();
-		notifyFinished();
-    }
-
-	public Transcriber getTranscriber() {
-		return transcriber;
-	}
-
-	public void addListener(RecognitionProgressListener listener) {
-		listeners.add(listener);
-	}
-
-	public void removeListener(RecognitionProgressListener listener) {
-		listeners.remove(listener);
-	}
-
-	private void notifyCancelled() {
-		for(RecognitionProgressListener l : listeners) {
-			l.cancelled();
-		}
-	}
-
-	private void notifyFinished() {
-		for(RecognitionProgressListener l : listeners) {
-			l.allFinished(transcriber);
-		}
-	}
+  public Transcriber getTranscriber() {
+    return transcriber;
+  }
 }

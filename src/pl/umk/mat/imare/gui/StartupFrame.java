@@ -173,7 +173,7 @@ public class StartupFrame extends javax.swing.JInternalFrame {
 
 		private void openProjectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openProjectButtonActionPerformed
 			dispose();
-			mainWindow.openProjectClicked();
+//			mainWindow.openProjectClicked();
 		}//GEN-LAST:event_openProjectButtonActionPerformed
 
 		private void formAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_formAncestorAdded

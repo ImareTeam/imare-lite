@@ -336,10 +336,10 @@ public class WizardFrame extends javax.swing.JInternalFrame implements ProjectPa
 		}
 		else if(currentStep == 2) {
 			Recognizer reco = recognizerOptionsPanel1.getRecognizer(mainWindow.getOpenedWave());
-			progress = new RecognitionProgress(reco, false);
+			progress = new RecognitionProgress(mainWindow.getOpenedWave().filename, reco, false);
 			getDesktopPane().add(progress);
 			progress.setVisible(true);
-			progress.addListener(this);
+//			progress.addListener(this);
 			hide();
 			reco.start();			
 			return;

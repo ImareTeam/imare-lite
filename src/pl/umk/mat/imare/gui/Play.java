@@ -136,7 +136,6 @@ public class Play implements Runnable {
 
         Thread watek = new Thread(this);
         watek.start();
-
     }
 
     public void pause() {

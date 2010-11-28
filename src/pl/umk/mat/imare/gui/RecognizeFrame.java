@@ -99,7 +99,7 @@ public class RecognizeFrame extends javax.swing.JInternalFrame {
 
 	private void recognizeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recognizeButtonActionPerformed
 		Recognizer reco = recognizerOptionsPanel1.getRecognizer(mainWindow.getOpenedWave());
-		RecognitionProgress prog = new RecognitionProgress(reco, true);
+		RecognitionProgress prog = new RecognitionProgress(mainWindow.getOpenedWave().filename, reco, true);
 		getDesktopPane().add(prog);
 		prog.setVisible(true);
 		reco.start();

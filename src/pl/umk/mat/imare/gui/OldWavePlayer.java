@@ -4,9 +4,9 @@
  */
 
 /*
- * WavePanel.java
+ * Okno.java
  *
- * Created on 2010-04-16, 15:04:27
+ * Created on 2010-02-25, 20:56:12
  */
 
 package pl.umk.mat.imare.gui;
@@ -16,6 +16,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
 import java.util.logging.Level;
@@ -26,31 +28,409 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 import pl.umk.mat.imare.io.Wave;
 import pl.umk.mat.imare.reco.Recognizer;
 import pl.umk.mat.imare.reco.WindowFunctionBlackman;
 
 /**
  *
- * @author morti
+ * @author Tyczo
  */
-public class WavePanel extends javax.swing.JPanel implements PlayListener {
+public class OldWavePlayer extends javax.swing.JInternalFrame implements PlayListener{
 
-	private Wave wave = null;
-	private JPanel cursorPanel = null;
-	private JPanel wavePanel = null;
+    private Wave wave = null;
+    private JPanel cursorPanel = null;
+    private JPanel wavePanel = null;
     private BufferedImage waveImage = null, img = null, timeImage = null;
     private Play odt = null;
     private int startX, endX, xPress, posStart, posEnd, position, start, stop, selStart, selEnd;
     private double length, wsp = 1;
     private boolean test = true;
-	private MainGUI mainWindow;
 
-    /** Creates new form WavePanel */
-    public WavePanel() {
-        initComponents();
+    /** Creates new form Okno */
+	public OldWavePlayer() {
+		initComponents();
+		addComponentListener(new ComponentListener() {
 
-		wavePanel = new JPanel() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+			}
+
+			@Override
+			public void componentMoved(ComponentEvent e) {
+			}
+
+			@Override
+			public void componentShown(ComponentEvent e) {
+			}
+
+			@Override
+			public void componentHidden(ComponentEvent e) {
+				stopButtonActionPerformed(null);
+			}
+		});
+
+		setWave(null);
+	}
+
+//	public WavePlayer(Wave wave) {
+//		initComponents();
+//		SpinnerModel model = new SpinnerNumberModel(0.0, 0.0, length, 0.01);
+//		startTime.setModel(model);
+//		model = new SpinnerNumberModel(0, 0.0, length, 0.01);
+//		endTime.setModel(model);
+//
+//		this.wave = wave;
+//
+//		setTitle(wave.getFile().getName());
+//
+//		length = wave.getSampleCount()/wave.getAudioFormat().getSampleRate();
+//		posStart = 0;
+//		posEnd = wave.getSampleCount();
+//
+//		scrollBar.setMaximum(wave.getSampleCount());
+//		scrollBar.setVisible(false);
+//
+//		String info = "", str = "";
+//		DecimalFormat numberFormat = new DecimalFormat("00.000");
+//		AudioFormat format = wave.getAudioFormat();
+//		double l = length;
+//		str = Integer.toString((int)l/60)+":";
+//		l %= 60;
+//
+//		info += "<html><b>Ilość kanałów:</b> " + format.getChannels();
+//		info += " <b>Częstotliwość:</b> " + format.getSampleRate();
+//		info += " <b>Rozmiar próbki:</b> " + format.getFrameSize();
+//		info += " <b>BPS:</b> " + format.getSampleSizeInBits();
+//		info += " <b>Długość:</b> " + str + numberFormat.format(l) + "</html>";
+//		infoLabel.setText(info);
+//	}
+
+	public void setWave(Wave wave) {
+		this.wave = wave;
+
+		if(wave != null) {
+//			setTitle(wave.getFile().getName());
+
+			length = wave.getSampleCount()/wave.getAudioFormat().getSampleRate();
+			posStart = 0;
+			posEnd = wave.getSampleCount();
+
+                        SpinnerModel model = new SpinnerNumberModel(0.0, 0.0, length, 0.01);
+                        startTime.setModel(model);
+                        model = new SpinnerNumberModel(0, 0.0, length, 0.01);
+                        endTime.setModel(model);
+
+
+			scrollBar.setMaximum(wave.getSampleCount());
+			scrollBar.setVisible(false);
+
+			String info = "", str = "";
+			DecimalFormat numberFormat = new DecimalFormat("00.000");
+			AudioFormat format = wave.getAudioFormat();
+			double l = length;
+			str = Integer.toString((int)l/60)+":";
+			l %= 60;
+
+			info += "<html><b>Ilość kanałów:</b> " + format.getChannels();
+			info += " <b>Częstotliwość:</b> " + format.getSampleRate();
+			info += " <b>Rozmiar ramki:</b> " + format.getFrameSize();
+			info += " <b>BPS:</b> " + format.getSampleSizeInBits();
+			info += " <b>Długość:</b> " + str + numberFormat.format(l) + "</html>";
+			infoLabel.setText(info);
+		} else {
+//			setTitle("Odtwarzacz");
+//			if(waveImage != null) {
+//				Graphics2D g = waveImage.createGraphics();
+//				g.setColor(new Color(238, 238, 238));
+//				g.fillRect(0, 0, waveImage.getWidth(), waveImage.getHeight());
+//			}
+			infoLabel.setText("");
+		}
+		this.setSize(this.getMinimumSize());
+	}
+
+    /** This method is called from within the constructor to
+     * initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is
+     * always regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
+
+        toolBar = new javax.swing.JToolBar();
+        playButton = new javax.swing.JButton();
+        pauseButton = new javax.swing.JButton();
+        stopButton = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JToolBar.Separator();
+        recognizeButton = new javax.swing.JButton();
+        startTime = new javax.swing.JSpinner();
+        endTime = new javax.swing.JSpinner();
+        fftButton = new javax.swing.JButton();
+        zoomIn = new javax.swing.JButton();
+        zoomOut = new javax.swing.JButton();
+        volumeSlider = new javax.swing.JSlider();
+        infoLabel = new javax.swing.JLabel();
+        containingPanel = new javax.swing.JPanel();
+        timePanel = new javax.swing.JPanel(){
+            @Override
+            public void paint(Graphics g) {
+                super.paint(g);
+                g.drawImage(timeImage, 0, 0, null);
+            }};
+            layerPane = new javax.swing.JLayeredPane();
+            scrollBar = new javax.swing.JScrollBar();
+
+            setClosable(true);
+            setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
+            setMaximizable(true);
+            setResizable(true);
+            setTitle("Strumień Audio");
+            setDoubleBuffered(true);
+            setMinimumSize(new java.awt.Dimension(525, 250));
+            setPreferredSize(new java.awt.Dimension(460, 250));
+            addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+                public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+                }
+                public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+                }
+                public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+                }
+                public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+                }
+                public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+                }
+                public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+                }
+                public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                    formInternalFrameOpened(evt);
+                }
+            });
+            getContentPane().setLayout(new java.awt.GridBagLayout());
+
+            toolBar.setFloatable(false);
+            toolBar.setRollover(true);
+
+            playButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/umk/mat/imare/gui/gfx/play.png"))); // NOI18N
+            playButton.setToolTipText("Odtwórz plik");
+            playButton.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    playButtonActionPerformed(evt);
+                }
+            });
+            toolBar.add(playButton);
+
+            pauseButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/umk/mat/imare/gui/gfx/pause.png"))); // NOI18N
+            pauseButton.setToolTipText("Pauza");
+            pauseButton.setEnabled(false);
+            pauseButton.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    pauseButtonActionPerformed(evt);
+                }
+            });
+            toolBar.add(pauseButton);
+
+            stopButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/umk/mat/imare/gui/gfx/stop.png"))); // NOI18N
+            stopButton.setToolTipText("Stop");
+            stopButton.setEnabled(false);
+            stopButton.setFocusable(false);
+            stopButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+            stopButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+            stopButton.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    stopButtonActionPerformed(evt);
+                }
+            });
+            toolBar.add(stopButton);
+            toolBar.add(jSeparator1);
+
+            recognizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/umk/mat/imare/gui/gfx/recognize.png"))); // NOI18N
+            recognizeButton.setToolTipText("Rozpoznawanie...");
+            recognizeButton.setFocusable(false);
+            recognizeButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+            recognizeButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+            recognizeButton.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    recognizeButtonActionPerformed(evt);
+                }
+            });
+            toolBar.add(recognizeButton);
+
+            startTime.setModel(new javax.swing.SpinnerNumberModel(Double.valueOf(0.0d), null, null, Double.valueOf(0.009999999776482582d)));
+            startTime.setMaximumSize(new java.awt.Dimension(75, 20));
+            startTime.addChangeListener(new javax.swing.event.ChangeListener() {
+                public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                    startTimeStateChanged(evt);
+                }
+            });
+            toolBar.add(startTime);
+
+            endTime.setMaximumSize(new java.awt.Dimension(75, 20));
+            endTime.addChangeListener(new javax.swing.event.ChangeListener() {
+                public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                    endTimeStateChanged(evt);
+                }
+            });
+            toolBar.add(endTime);
+
+            fftButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/umk/mat/imare/gui/gfx/fft.png"))); // NOI18N
+            fftButton.setToolTipText("Rysuj FFT");
+            fftButton.setFocusable(false);
+            fftButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+            fftButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+            fftButton.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    fftButtonActionPerformed(evt);
+                }
+            });
+            toolBar.add(fftButton);
+
+            zoomIn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/umk/mat/imare/gui/gfx/zoom_in.png"))); // NOI18N
+            zoomIn.setToolTipText("Powiększ");
+            zoomIn.setFocusable(false);
+            zoomIn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+            zoomIn.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+            zoomIn.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    zoomInActionPerformed(evt);
+                }
+            });
+            toolBar.add(zoomIn);
+
+            zoomOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/umk/mat/imare/gui/gfx/zoom_out.png"))); // NOI18N
+            zoomOut.setToolTipText("Pomniejsz");
+            zoomOut.setFocusable(false);
+            zoomOut.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+            zoomOut.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+            zoomOut.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    zoomOutActionPerformed(evt);
+                }
+            });
+            toolBar.add(zoomOut);
+
+            volumeSlider.setMinimum(50);
+            volumeSlider.setToolTipText("Pasek głośńości");
+            volumeSlider.setValue(100);
+            volumeSlider.setMaximumSize(new java.awt.Dimension(100, 25));
+            volumeSlider.setOpaque(false);
+            volumeSlider.setPreferredSize(new java.awt.Dimension(50, 25));
+            volumeSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+                public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                    volumeSliderStateChanged(evt);
+                }
+            });
+            toolBar.add(volumeSlider);
+
+            gridBagConstraints = new java.awt.GridBagConstraints();
+            gridBagConstraints.gridx = 0;
+            gridBagConstraints.gridy = 0;
+            gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+            gridBagConstraints.weightx = 1.0;
+            getContentPane().add(toolBar, gridBagConstraints);
+            gridBagConstraints = new java.awt.GridBagConstraints();
+            gridBagConstraints.gridx = 0;
+            gridBagConstraints.gridy = 2;
+            gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+            gridBagConstraints.weightx = 1.0;
+            getContentPane().add(infoLabel, gridBagConstraints);
+
+            javax.swing.GroupLayout timePanelLayout = new javax.swing.GroupLayout(timePanel);
+            timePanel.setLayout(timePanelLayout);
+            timePanelLayout.setHorizontalGroup(
+                timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(0, 450, Short.MAX_VALUE)
+            );
+            timePanelLayout.setVerticalGroup(
+                timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(0, 20, Short.MAX_VALUE)
+            );
+
+            layerPane.addComponentListener(new java.awt.event.ComponentAdapter() {
+                public void componentResized(java.awt.event.ComponentEvent evt) {
+                    layerPaneComponentResized(evt);
+                }
+            });
+
+            scrollBar.setOrientation(javax.swing.JScrollBar.HORIZONTAL);
+            scrollBar.addAdjustmentListener(new java.awt.event.AdjustmentListener() {
+                public void adjustmentValueChanged(java.awt.event.AdjustmentEvent evt) {
+                    scrollBarAdjustmentValueChanged(evt);
+                }
+            });
+
+            javax.swing.GroupLayout containingPanelLayout = new javax.swing.GroupLayout(containingPanel);
+            containingPanel.setLayout(containingPanelLayout);
+            containingPanelLayout.setHorizontalGroup(
+                containingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(timePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(scrollBar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+                .addComponent(layerPane, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+            );
+            containingPanelLayout.setVerticalGroup(
+                containingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(containingPanelLayout.createSequentialGroup()
+                    .addComponent(timePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(layerPane, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
+                    .addGap(0, 0, 0)
+                    .addComponent(scrollBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            );
+
+            gridBagConstraints = new java.awt.GridBagConstraints();
+            gridBagConstraints.gridx = 0;
+            gridBagConstraints.gridy = 1;
+            gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+            gridBagConstraints.weightx = 1.0;
+            gridBagConstraints.weighty = 1.0;
+            getContentPane().add(containingPanel, gridBagConstraints);
+
+            pack();
+        }// </editor-fold>                        
+
+    private void playButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
+
+        playButton.setEnabled(false);
+        pauseButton.setEnabled(true);
+        stopButton.setEnabled(true);
+
+        if(odt == null){
+            Double d1 = (Double)startTime.getValue(), d2 = (Double)endTime.getValue();
+
+            if(d1.equals(d2)){
+                if(cursorPanel.getLocation().x==-1){
+                    start = 0;
+                    stop = wave.getSampleCount();
+                }else{
+                    start = (int) (scrollBar.getValue() + (cursorPanel.getLocation().x / (double) wavePanel.getWidth())*(posEnd-posStart));
+                    stop = wave.getSampleCount();
+                }
+            } else{
+                start = (int) (d1 / length * wave.getSampleCount());
+                stop =  (int) (d2 / length * wave.getSampleCount());
+            }
+            odt = new Play(wave, start, stop);
+            odt.addPlayListener(this);
+        }
+        else {
+			odt.play();
+        }
+
+    }                                          
+
+    private void pauseButtonActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        playButton.setEnabled(true);
+        pauseButton.setEnabled(false);
+        odt.pause();
+
+    }                                           
+
+    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {                                         
+        wavePanel = new JPanel() {
 			@Override
 			public void paint(Graphics g) {
 				super.paint(g);
@@ -90,317 +470,106 @@ public class WavePanel extends javax.swing.JPanel implements PlayListener {
 		layerPane.add(wavePanel, new Integer(0));
 		layerPane.add(cursorPanel, new Integer(1));
 		rysuj();
-    }
+    }                                        
 
-    /** This method is called from within the constructor to
-     * initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is
-     * always regenerated by the Form Editor.
-     */
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
+    private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        playButton.setEnabled(true);
+        pauseButton.setEnabled(false);
+        stopButton.setEnabled(false);
 
-        toolBar = new javax.swing.JToolBar();
-        playButton = new javax.swing.JButton();
-        pauseButton = new javax.swing.JButton();
-        stopButton = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JToolBar.Separator();
-        recognizeButton = new javax.swing.JButton();
-        startTime = new javax.swing.JSpinner();
-        endTime = new javax.swing.JSpinner();
-        fftButton = new javax.swing.JButton();
-        zoomIn = new javax.swing.JButton();
-        zoomOut = new javax.swing.JButton();
-        volumeSlider = new javax.swing.JSlider();
-        infoLabel = new javax.swing.JLabel();
-        containingPanel = new javax.swing.JPanel();
-        timePanel = new javax.swing.JPanel(){
-            @Override
-            public void paint(Graphics g) {
-                super.paint(g);
-                g.drawImage(timeImage, 0, 0, null);
-            }};
-            layerPane = new javax.swing.JLayeredPane();
-            scrollBar = new javax.swing.JScrollBar();
+        if (odt != null) {
+            odt.stop();
+        }
+        containingPanel.repaint();
+    }                                          
 
-            addAncestorListener(new javax.swing.event.AncestorListener() {
-                public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-                }
-                public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                    formAncestorAdded(evt);
-                }
-                public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-                }
-            });
-            setLayout(new java.awt.GridBagLayout());
+    private void recognizeButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                
 
-            toolBar.setFloatable(false);
-            toolBar.setRollover(true);
+        try {
 
-            playButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/umk/mat/imare/gui/gfx/play.png"))); // NOI18N
-            playButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    playButtonActionPerformed(evt);
-                }
-            });
-            toolBar.add(playButton);
-
-            pauseButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/umk/mat/imare/gui/gfx/pause.png"))); // NOI18N
-            pauseButton.setEnabled(false);
-            pauseButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    pauseButtonActionPerformed(evt);
-                }
-            });
-            toolBar.add(pauseButton);
-
-            stopButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/umk/mat/imare/gui/gfx/stop.png"))); // NOI18N
-            stopButton.setEnabled(false);
-            stopButton.setFocusable(false);
-            stopButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-            stopButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-            stopButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    stopButtonActionPerformed(evt);
-                }
-            });
-            toolBar.add(stopButton);
-            toolBar.add(jSeparator1);
-
-            recognizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/umk/mat/imare/gui/gfx/recognize.png"))); // NOI18N
-            recognizeButton.setFocusable(false);
-            recognizeButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-            recognizeButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-            recognizeButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    recognizeButtonActionPerformed(evt);
-                }
-            });
-            toolBar.add(recognizeButton);
-
-            startTime.setMaximumSize(new java.awt.Dimension(75, 20));
-            startTime.addChangeListener(new javax.swing.event.ChangeListener() {
-                public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                    startTimeStateChanged(evt);
-                }
-            });
-            toolBar.add(startTime);
-
-            endTime.setMaximumSize(new java.awt.Dimension(75, 20));
-            endTime.addChangeListener(new javax.swing.event.ChangeListener() {
-                public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                    endTimeStateChanged(evt);
-                }
-            });
-            toolBar.add(endTime);
-
-            fftButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/umk/mat/imare/gui/gfx/fft.png"))); // NOI18N
-            fftButton.setFocusable(false);
-            fftButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-            fftButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-            fftButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    fftButtonActionPerformed(evt);
-                }
-            });
-            toolBar.add(fftButton);
-
-            zoomIn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/umk/mat/imare/gui/gfx/zoom_in.png"))); // NOI18N
-            zoomIn.setFocusable(false);
-            zoomIn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-            zoomIn.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-            zoomIn.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    zoomInActionPerformed(evt);
-                }
-            });
-            toolBar.add(zoomIn);
-
-            zoomOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/umk/mat/imare/gui/gfx/zoom_out.png"))); // NOI18N
-            zoomOut.setFocusable(false);
-            zoomOut.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-            zoomOut.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-            zoomOut.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    zoomOutActionPerformed(evt);
-                }
-            });
-            toolBar.add(zoomOut);
-
-            volumeSlider.setMinimum(50);
-            volumeSlider.setValue(100);
-            volumeSlider.setMaximumSize(new java.awt.Dimension(100, 25));
-            volumeSlider.setOpaque(false);
-            volumeSlider.setPreferredSize(new java.awt.Dimension(50, 25));
-            volumeSlider.addChangeListener(new javax.swing.event.ChangeListener() {
-                public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                    volumeSliderStateChanged(evt);
-                }
-            });
-            toolBar.add(volumeSlider);
-
-            gridBagConstraints = new java.awt.GridBagConstraints();
-            gridBagConstraints.gridx = 0;
-            gridBagConstraints.gridy = 0;
-            gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-            gridBagConstraints.weightx = 1.0;
-            add(toolBar, gridBagConstraints);
-            gridBagConstraints = new java.awt.GridBagConstraints();
-            gridBagConstraints.gridx = 0;
-            gridBagConstraints.gridy = 2;
-            gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-            gridBagConstraints.weightx = 1.0;
-            add(infoLabel, gridBagConstraints);
-
-            javax.swing.GroupLayout timePanelLayout = new javax.swing.GroupLayout(timePanel);
-            timePanel.setLayout(timePanelLayout);
-            timePanelLayout.setHorizontalGroup(
-                timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGap(0, 470, Short.MAX_VALUE)
-            );
-            timePanelLayout.setVerticalGroup(
-                timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGap(0, 20, Short.MAX_VALUE)
-            );
-
-            layerPane.addComponentListener(new java.awt.event.ComponentAdapter() {
-                public void componentResized(java.awt.event.ComponentEvent evt) {
-                    layerPaneComponentResized(evt);
-                }
-            });
-
-            scrollBar.setOrientation(javax.swing.JScrollBar.HORIZONTAL);
-            scrollBar.addAdjustmentListener(new java.awt.event.AdjustmentListener() {
-                public void adjustmentValueChanged(java.awt.event.AdjustmentEvent evt) {
-                    scrollBarAdjustmentValueChanged(evt);
-                }
-            });
-
-            javax.swing.GroupLayout containingPanelLayout = new javax.swing.GroupLayout(containingPanel);
-            containingPanel.setLayout(containingPanelLayout);
-            containingPanelLayout.setHorizontalGroup(
-                containingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(timePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(scrollBar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
-                .addComponent(layerPane, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
-            );
-            containingPanelLayout.setVerticalGroup(
-                containingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(containingPanelLayout.createSequentialGroup()
-                    .addComponent(timePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(layerPane, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
-                    .addGap(0, 0, 0)
-                    .addComponent(scrollBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            );
-
-            gridBagConstraints = new java.awt.GridBagConstraints();
-            gridBagConstraints.gridx = 0;
-            gridBagConstraints.gridy = 1;
-            gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-            gridBagConstraints.weightx = 1.0;
-            gridBagConstraints.weighty = 1.0;
-            add(containingPanel, gridBagConstraints);
-        }// </editor-fold>//GEN-END:initComponents
-
-	private void playButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playButtonActionPerformed
-
-		playButton.setEnabled(false);
-		pauseButton.setEnabled(true);
-		stopButton.setEnabled(true);
-
-		if(odt == null){
-			Double d1 = (Double)startTime.getValue(), d2 = (Double)endTime.getValue();
-
-			if(d1.equals(d2)){
-                            if(cursorPanel.getLocation().x==-1){
-                                start = 0;
-                                stop = wave.getSampleCount();
-                            }else{
-                                start = (int) (scrollBar.getValue() + (cursorPanel.getLocation().x / (double) wavePanel.getWidth())*(posEnd-posStart));
-                                stop = wave.getSampleCount();
-                            }
-			} else{
-				start = (int) (d1 / length * wave.getSampleCount());
-				stop =  (int) (d2 / length * wave.getSampleCount());
-			}
-			odt = new Play(wave, start, stop);
-			odt.addPlayListener(this);
-		} else {
-			odt.play();
-		}
-	}//GEN-LAST:event_playButtonActionPerformed
-
-	private void pauseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pauseButtonActionPerformed
-		playButton.setEnabled(true);
-		pauseButton.setEnabled(false);
-		odt.pause();
-	}//GEN-LAST:event_pauseButtonActionPerformed
-
-	private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButtonActionPerformed
-		playButton.setEnabled(true);
-		pauseButton.setEnabled(false);
-		stopButton.setEnabled(false);
-
-		odt.stop();
-		containingPanel.repaint();
-}//GEN-LAST:event_stopButtonActionPerformed
-
-	private void recognizeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recognizeButtonActionPerformed
-            try {
-                final float rate = wave.getAudioFormat().getSampleRate();
-                int iStart = (int) Math.round((Double) (startTime.getValue()) * rate);
-                int iEnd = (int) Math.round((Double) (endTime.getValue()) * rate);
-                if (iStart >= iEnd) {
-                    iStart = 0;
-                    iEnd = wave.getSampleCount();
-                }
-                Recognizer recognizer = new Recognizer(wave,iStart,iEnd);
-                RecognitionProgress recogProg = new RecognitionProgress(wave.filename, recognizer, true);
-                mainWindow.addFrame(recogProg, true);
-                recognizer.start();
-            } catch (Exception ex) {
-                Logger.getLogger(FFTFrame.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(null, "Wrong size exception caught!", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
+            final float rate = wave.getAudioFormat().getSampleRate();
+            int iStart = (int)Math.round((Double)(startTime.getValue()) * rate);
+            int iEnd = (int)Math.round((Double)(endTime.getValue()) * rate);
+            if (iStart >= iEnd) {
+                iStart = 0;
+                iEnd = wave.getSampleCount();
             }
-}//GEN-LAST:event_recognizeButtonActionPerformed
 
-	private void startTimeStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_startTimeStateChanged
-		Double d1 = (Double)startTime.getValue(), d2 = (Double)endTime.getValue();
-		if(d1<0) endTime.setValue(0);
-		if(d1>d2) startTime.setValue(endTime.getValue());
-		else if(test) paintSelected();
-}//GEN-LAST:event_startTimeStateChanged
+            Recognizer recognizer = new Recognizer(wave,iStart,iEnd);
+            RecognitionProgress recogProg = new RecognitionProgress(wave.filename, recognizer, true);
+            JDesktopPane desktop = getDesktopPane();
+            desktop.add(recogProg);
+            int x = (desktop.getWidth() - recogProg.getWidth()) / 2;
+            int y = (desktop.getHeight() - recogProg.getHeight()) / 2;
+            recogProg.setLocation(x, y);
+            recogProg.setVisible(true);
+            recognizer.start();
+        } catch (Exception ex) {
+            Logger.getLogger(FFTFrame.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Wrong size exception caught!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    }                                               
 
-	private void endTimeStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_endTimeStateChanged
-		Double d1 = (Double)startTime.getValue(), d2 = (Double)endTime.getValue();
-		if(d2>length) startTime.setValue(length);
-		if(d1>d2) endTime.setValue(startTime.getValue());
-		else if(test) paintSelected();
-}//GEN-LAST:event_endTimeStateChanged
+        private void endTimeStateChanged(javax.swing.event.ChangeEvent evt) {                                     
+            Double d1 = (Double)startTime.getValue(), d2 = (Double)endTime.getValue();
+            if(d2>length) startTime.setValue(length);
+            if(d1>d2) endTime.setValue(startTime.getValue());
+            else if(test) paintSelected();
+        }                                    
 
-	private void fftButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fftButtonActionPerformed
+        private void fftButtonActionPerformed(java.awt.event.ActionEvent evt) {                                          
+         
+             Double d1 = (Double)startTime.getValue(), d2 = (Double)endTime.getValue();
 
-		Double d1 = (Double)startTime.getValue(), d2 = (Double)endTime.getValue();
+            int elen = (int) ((d2 - d1)/length * wave.getSampleCount());
 
-		int elen = (int) ((d2 - d1)/length * wave.getSampleCount());
+            if(elen<512) elen = 512;
 
-		if(elen<512) elen = 512;
+            int len = 2;
+            while (len<=elen && len<=1<<14) len<<=1;
+            len>>=1;
 
-		int len = 2;
-		while (len<=elen && len<=1<<14) len<<=1;
-		len>>=1;
+            int data[] = new int[len];
+            wave.readMono(data, (int)(d1/length * wave.getSampleCount()));
+            FFTFrame frame = new FFTFrame(data,(int) wave.getAudioFormat().getFrameRate(), wave.getAudioFormat().getSampleSizeInBits());
+            JDesktopPane desktop = getDesktopPane();
 
-		int data[] = new int[len];
-		wave.readMono(data, (int)(d1/length * wave.getSampleCount()));
-		FFTFrame frame = new FFTFrame(data,(int) wave.getAudioFormat().getFrameRate(), wave.getAudioFormat().getSampleSizeInBits());
-		mainWindow.addFrame(frame, true);
-}//GEN-LAST:event_fftButtonActionPerformed
+            desktop.add(frame);
+            frame.setVisible(true);
+            //frame.drawFFT();
+        }                                         
 
-	private void zoomInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zoomInActionPerformed
+        private void startTimeStateChanged(javax.swing.event.ChangeEvent evt) {                                       
+            Double d1 = (Double)startTime.getValue(), d2 = (Double)endTime.getValue();
+            if(d1<0) endTime.setValue(0);
+            if(d1>d2) startTime.setValue(endTime.getValue());
+            else if(test) paintSelected();
+        }                                      
+
+        private void layerPaneComponentResized(java.awt.event.ComponentEvent evt) {                                           
+            if(wavePanel != null) {
+                scrollBar.setVisibleAmount((posEnd-posStart));
+                rysuj();
+            }
+            if(cursorPanel != null)
+                cursorPanel.setSize(1, containingPanel.getHeight());
+
+            if(img!=null) paintSelected();
+        }                                          
+
+        private void scrollBarAdjustmentValueChanged(java.awt.event.AdjustmentEvent evt) {                                                 
+            if(scrollBar.getValueIsAdjusting()){
+                posStart = scrollBar.getValue();
+                posEnd = (int) (scrollBar.getValue() + scrollBar.getVisibleAmount());
+            }
+            if(test){
+                rysuj();
+                if(!startTime.getValue().equals(endTime.getValue())) paintSelected();
+            }
+        }                                                
+
+        private void zoomInActionPerformed(java.awt.event.ActionEvent evt) {                                       
             double d1 = (Double) startTime.getValue(), d2 = (Double) endTime.getValue();
 
             if (d1 == d2) {
@@ -411,164 +580,44 @@ public class WavePanel extends javax.swing.JPanel implements PlayListener {
                 posStart = (int) (d1 / length * wave.getSampleCount());
                 posEnd = (int) (d2 / length * wave.getSampleCount());
             }
-
-            wsp = (posEnd - posStart) / (double) wave.getSampleCount();
-            if (wsp < 1) {
-                scrollBar.setVisible(true);
-            }
+            wsp = (posEnd-posStart)/(double)wave.getSampleCount();
+            if(wsp<1) scrollBar.setVisible(true);
             test = false;
-            scrollBar.setVisibleAmount(posEnd - posStart);
+            scrollBar.setVisibleAmount(posEnd-posStart);
             scrollBar.setValue(posStart);
             test = true;
             rysuj();
             paintSelected();
-}//GEN-LAST:event_zoomInActionPerformed
+        }                                      
 
-	private void zoomOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zoomOutActionPerformed
+        private void zoomOutActionPerformed(java.awt.event.ActionEvent evt) {                                        
 
             int delta = (posEnd - posStart) / 6;
             posStart = Math.max(posStart - delta, 0);
             posEnd = Math.min(posEnd + delta, wave.getSampleCount());
             wsp = (posEnd - posStart) / (double) wave.getSampleCount();
-            if (wsp >= 1) {
+
+            if(wsp>=1){
                 wsp = 1;
                 scrollBar.setVisible(false);
             }
             test = false;
             scrollBar.setValue(posStart);
-            scrollBar.setVisibleAmount(posEnd - posStart);
+            scrollBar.setVisibleAmount(posEnd-posStart);
             test = true;
 
             rysuj();
             paintSelected();
-}//GEN-LAST:event_zoomOutActionPerformed
+        }                                       
 
-	private void volumeSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_volumeSliderStateChanged
-		if(odt!=null){
-			odt.setVolume(volumeSlider.getValue()/100.0f);
-		}
-}//GEN-LAST:event_volumeSliderStateChanged
+        private void volumeSliderStateChanged(javax.swing.event.ChangeEvent evt) {                                          
+            if(odt!=null){
+                odt.setVolume(volumeSlider.getValue()/100.0f);
+            }
+        }                                         
 
-	private void layerPaneComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_layerPaneComponentResized
-		if(wavePanel != null) {
-			scrollBar.setVisibleAmount((posEnd-posStart));
-			rysuj();
-		}
-		if(cursorPanel != null)
-			cursorPanel.setSize(1, containingPanel.getHeight());
-
-		if(img!=null) paintSelected();
-}//GEN-LAST:event_layerPaneComponentResized
-
-	private void scrollBarAdjustmentValueChanged(java.awt.event.AdjustmentEvent evt) {//GEN-FIRST:event_scrollBarAdjustmentValueChanged
-		if(scrollBar.getValueIsAdjusting()){
-			posStart = scrollBar.getValue();
-			posEnd = (int) (scrollBar.getValue() + scrollBar.getVisibleAmount());
-		}
-		if(test){
-			rysuj();
-			if(!startTime.getValue().equals(endTime.getValue())) paintSelected();
-		}
-}//GEN-LAST:event_scrollBarAdjustmentValueChanged
-
-	private void formAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_formAncestorAdded
-		Component c = getParent();
-		while(!(c instanceof MainGUI) && c != null) c = c.getParent();
-
-		if(c != null) {
-			mainWindow = (MainGUI)c;
-			mainWindow.showProjectPane(true);
-		}
-	}//GEN-LAST:event_formAncestorAdded
-
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel containingPanel;
-    private javax.swing.JSpinner endTime;
-    private javax.swing.JButton fftButton;
-    private javax.swing.JLabel infoLabel;
-    private javax.swing.JToolBar.Separator jSeparator1;
-    private javax.swing.JLayeredPane layerPane;
-    private javax.swing.JButton pauseButton;
-    private javax.swing.JButton playButton;
-    private javax.swing.JButton recognizeButton;
-    private javax.swing.JScrollBar scrollBar;
-    private javax.swing.JSpinner startTime;
-    private javax.swing.JButton stopButton;
-    private javax.swing.JPanel timePanel;
-    private javax.swing.JToolBar toolBar;
-    private javax.swing.JSlider volumeSlider;
-    private javax.swing.JButton zoomIn;
-    private javax.swing.JButton zoomOut;
-    // End of variables declaration//GEN-END:variables
-
-	public void setWave(Wave wave) {
-		this.wave = wave;
-
-		if(wave != null) {
-			length = wave.getSampleCount()/wave.getAudioFormat().getSampleRate();
-			posStart = 0;
-			posEnd = wave.getSampleCount();
-
-                        SpinnerModel model = new SpinnerNumberModel(0.0, 0.0, length, 0.01);
-                        startTime.setModel(model);
-                        model = new SpinnerNumberModel(0, 0.0, length, 0.01);
-                        endTime.setModel(model);
-
-
-			scrollBar.setMaximum(wave.getSampleCount());
-			scrollBar.setVisible(false);
-
-			String info = "", str = "";
-			DecimalFormat numberFormat = new DecimalFormat("00.000");
-			AudioFormat format = wave.getAudioFormat();
-			double l = length;
-			str = Integer.toString((int)l/60)+":";
-			l %= 60;
-
-			info += "<html><b>Ilość kanałów:</b> " + format.getChannels();
-			info += " <b>Częstotliwość:</b> " + format.getSampleRate();
-			info += " <b>Rozmiar próbki:</b> " + format.getFrameSize();
-			info += " <b>BPS:</b> " + format.getSampleSizeInBits();
-			info += " <b>Długość:</b> " + str + numberFormat.format(l) + "</html>";
-			infoLabel.setText(info);
-		} else {
-			infoLabel.setText("");
-		}
-	}
-
-	public void paintSelected(){
-		if(wave == null) return;
-		if(wavePanel == null) return;
-
-		Double d1 = (Double)startTime.getValue(), d2 = (Double)endTime.getValue();
-
-		int x = (int) (d1.doubleValue() / length * wave.getSampleCount());
-
-		if(x>=posEnd) return;
-		else if(x<=posStart) startX = 0;
-		else {
-			startX = (int) ((x - posStart) / (double) (posEnd-posStart) * wavePanel.getWidth());
-		}
-
-		x = (int) (d2.doubleValue() / length * wave.getSampleCount());
-		if(x>=posEnd) endX = wavePanel.getWidth();
-		else{
-			endX = (int) ((x - posStart) / (double) (posEnd-posStart) * wavePanel.getWidth());
-		}
-
-		Graphics2D grafImage = (Graphics2D) waveImage.getGraphics();
-		grafImage.drawImage(img, 0, 0, null);
-
-		for(int i = startX; i<endX; i++)
-			for(int j = 0; j<wavePanel.getHeight(); j++){
-				waveImage.setRGB(i, j, waveImage.getRGB(i,j)*-1);
-			}
-
-		wavePanel.repaint();
-	}
-
-	private void rysuj(){
+	
+    private void rysuj(){
 		if(wave == null) return;
 		if(wavePanel == null) return;
 //		if(waveImage == null) return;
@@ -672,7 +721,7 @@ public class WavePanel extends javax.swing.JPanel implements PlayListener {
                                 prevX = 0;
                                 prevY = -centerPos;
 
-
+                                
                                 for(int i=0; i < sampleCount; i++){
                                     x = (int)(i/(double)sampleCount*wavePanel.getWidth());
                                     y = -data[i];
@@ -691,8 +740,8 @@ public class WavePanel extends javax.swing.JPanel implements PlayListener {
                             else{
 
                                 int[] data = new int [samplesPerPixel];
-                                centerPos = (int) (wavePanel.getHeight() * ((2 * chann + 1) / (double) (2 * wave.getAudioFormat().getChannels())));
-
+                                centerPos = (int) (wavePanel.getHeight() * ((2 * chann + 1) / (double) (2 * wave.getAudioFormat().getChannels())));                              
+                                
                                 for(int x=0; x < wavePanel.getWidth(); x++) {
                                     wave.read(chann, data, posStart+x*samplesPerPixel);
 
@@ -724,9 +773,47 @@ public class WavePanel extends javax.swing.JPanel implements PlayListener {
         }
     }
 
+
+    // Variables declaration - do not modify                     
+    private javax.swing.JPanel containingPanel;
+    private javax.swing.JSpinner endTime;
+    private javax.swing.JButton fftButton;
+    private javax.swing.JLabel infoLabel;
+    private javax.swing.JToolBar.Separator jSeparator1;
+    private javax.swing.JLayeredPane layerPane;
+    private javax.swing.JButton pauseButton;
+    private javax.swing.JButton playButton;
+    private javax.swing.JButton recognizeButton;
+    private javax.swing.JScrollBar scrollBar;
+    private javax.swing.JSpinner startTime;
+    private javax.swing.JButton stopButton;
+    private javax.swing.JPanel timePanel;
+    private javax.swing.JToolBar toolBar;
+    private javax.swing.JSlider volumeSlider;
+    private javax.swing.JButton zoomIn;
+    private javax.swing.JButton zoomOut;
+    // End of variables declaration                   
+
+    @Override
+    public void playingFinished() {
+		odt = null;
+        playButton.setEnabled(true);
+        stopButton.setEnabled(false);
+        pauseButton.setEnabled(false);
+
+		cursorPanel.setLocation(-1, 0);
+    }
+
+        @Override
+        public void setVolume(){
+            if(odt!=null){
+                odt.setVolume(volumeSlider.getValue()/100.0f);
+            }
+        }
+
 	@Override
 	public void positionChanged(int newPosition) {
-		if(newPosition >= stop) stopButtonActionPerformed(null);
+		    if(newPosition >= stop) stopButtonActionPerformed(null);
             else{
                 if(newPosition<posStart || newPosition>posEnd){
                     test = false;
@@ -747,20 +834,9 @@ public class WavePanel extends javax.swing.JPanel implements PlayListener {
 	}
 
 	@Override
-	public void playingFinished() {
-		odt = null;
-        playButton.setEnabled(true);
-        stopButton.setEnabled(false);
-        pauseButton.setEnabled(false);
-
-		cursorPanel.setLocation(-1, 0);
-	}
-
-	@Override
-	public void setVolume() {
-		if(odt!=null){
-			odt.setVolume(volumeSlider.getValue()/100.0f);
-		}
+	public void dispose() {
+		super.dispose();
+		if(odt != null) odt.stop();
 	}
 
 	public void wavePanelMousePressed(java.awt.event.MouseEvent evt){
@@ -813,18 +889,41 @@ public class WavePanel extends javax.swing.JPanel implements PlayListener {
 			}
 
 		wavePanel.repaint();
+
 	}
 
-	public void close() {
-		if(odt != null) odt.stop();
+	public void paintSelected(){
+		if(wave == null) return;
+		if(wavePanel == null) return;
+
+		Double d1 = (Double)startTime.getValue(), d2 = (Double)endTime.getValue();
+
+		int x = (int) (d1.doubleValue() / length * wave.getSampleCount());
+
+		if(x>=posEnd) return;
+		else if(x<=posStart) startX = 0;
+		else {
+			startX = (int) ((x - posStart) / (double) (posEnd-posStart) * wavePanel.getWidth());
+		}
+
+		x = (int) (d2.doubleValue() / length * wave.getSampleCount());
+		if(x>=posEnd) endX = wavePanel.getWidth();
+		else{
+			endX = (int) ((x - posStart) / (double) (posEnd-posStart) * wavePanel.getWidth());
+		}
+
+		Graphics2D grafImage = (Graphics2D) waveImage.getGraphics();
+		grafImage.drawImage(img, 0, 0, null);
+
+		for(int i = startX; i<endX; i++)
+			for(int j = 0; j<wavePanel.getHeight(); j++){
+				waveImage.setRGB(i, j, waveImage.getRGB(i,j)*-1);
+			}
+
+		wavePanel.repaint();
 	}
-
-	public void stopWavePlayback() {
-		playButton.setEnabled(true);
-		pauseButton.setEnabled(false);
-		stopButton.setEnabled(false);
-
-		if(odt != null) odt.stop();
-		containingPanel.repaint();
+        
+	public BufferedImage getWaveImage() {
+		return waveImage;
 	}
 }

@@ -126,7 +126,7 @@
                           <Component id="wavePanel1" alignment="1" pref="516" max="32767" attributes="0"/>
                           <Component id="infoLabel1" alignment="1" pref="516" max="32767" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="audioPath" pref="420" max="32767" attributes="0"/>
+                              <Component id="audioPath" pref="422" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="loadAudioButton" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -146,7 +146,7 @@
                           <Component id="loadAudioButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="wavePanel1" pref="311" max="32767" attributes="0"/>
+                      <Component id="wavePanel1" pref="310" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>

@@ -15,6 +15,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.beans.PropertyVetoException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDesktopPane;
@@ -26,9 +27,13 @@ import javax.swing.JDesktopPane;
 abstract public class ProgressThreadFrame extends javax.swing.JInternalFrame {
 
     private volatile boolean terminated = false;
-    private double startTime = Double.NaN;
-    private double lastTime = Double.NaN;
-    private float lastProgress = Float.NaN;
+    private double startTime = 0.0;
+
+    private double sumX = 0.0;
+    private double sumY = 0.0;
+    private double sumXY = 0.0;
+    private double sumX2 = 0.0;
+    private int count = 0;
 
     /** Creates new form ProgressFrame */
     public ProgressThreadFrame(JDesktopPane parent) {
@@ -47,52 +52,53 @@ abstract public class ProgressThreadFrame extends javax.swing.JInternalFrame {
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+  // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+  private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        progressBar = new javax.swing.JProgressBar();
-        label = new javax.swing.JLabel();
+    jLabel1 = new javax.swing.JLabel();
+    progressBar = new javax.swing.JProgressBar();
+    label = new javax.swing.JLabel();
 
-        jLabel1.setText("jLabel1");
+    jLabel1.setText("jLabel1");
 
-        setTitle("Działanie w toku...");
-        setDoubleBuffered(true);
+    setTitle("Działanie w toku...");
+    setDoubleBuffered(true);
 
-        label.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        label.setText("...");
+    label.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+    label.setText("...");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(label, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(progressBar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(label))
-        );
+    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+    getContentPane().setLayout(layout);
+    layout.setHorizontalGroup(
+      layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+        .addContainerGap()
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+          .addComponent(label, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
+          .addComponent(progressBar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE))
+        .addContainerGap())
+    );
+    layout.setVerticalGroup(
+      layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(layout.createSequentialGroup()
+        .addContainerGap()
+        .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(label)
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+    );
 
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
+    pack();
+  }// </editor-fold>//GEN-END:initComponents
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel label;
-    private javax.swing.JProgressBar progressBar;
-    // End of variables declaration//GEN-END:variables
+  // Variables declaration - do not modify//GEN-BEGIN:variables
+  private javax.swing.JLabel jLabel1;
+  private javax.swing.JLabel label;
+  private javax.swing.JProgressBar progressBar;
+  // End of variables declaration//GEN-END:variables
 
-    private static double getTime() {
-        return (double)System.currentTimeMillis() / 1000.0;
+    private double getTime() {
+        return (double)System.currentTimeMillis()/1000.0 - startTime;
     }
 
     private void setFinished() {
@@ -135,27 +141,37 @@ abstract public class ProgressThreadFrame extends javax.swing.JInternalFrame {
     }
 
     public void setProgress(final float progress) {
-        final float level = lastProgress;
-        final double t0 = lastTime;
-        final double t = getTime();
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                String fmt;
-                double est = (1.0f-progress) * (t-t0)/(progress-level);
-                if (Double.isInfinite(est)) {
-                    fmt = "∞";
-                } else if (Double.isNaN(est)) {
-                    fmt = "?";
-                } else {
-                    fmt = Long.toString(Math.round(est));
-                }
-                label.setText("pozostało: "+fmt+" s");
-                progressBar.setValue((int)Math.floor(progress * progressBar.getMaximum()));
-            }
-        });
-        lastProgress = progress;
-        lastTime = t;
+      final double t = getTime();
+      sumX += t;
+      sumY += progress;
+      sumXY += t*progress;
+      sumX2 += t*t;
+      ++count;
+      
+      double t0 = Double.NaN;
+      double coeff = 1.0 / (sumX2 - sumX*sumX);
+      if (!Double.isInfinite(coeff)) {
+        double a = (sumXY - sumX*sumY) * coeff;
+        double b = (sumY - a*sumX)/count;
+        t0 = (1-b)/a;
+      }
+
+      final double dt = t0 - t;
+      EventQueue.invokeLater(new Runnable() {
+          @Override
+          public void run() {
+              String fmt;
+              if (Double.isInfinite(dt)) {
+                  fmt = "∞";
+              } else if (Double.isNaN(dt)) {
+                  fmt = "?";
+              } else {
+                  fmt = Long.toString(Math.round(dt));
+              }
+              label.setText("pozostało: "+fmt+" s");
+              progressBar.setValue((int)Math.floor(progress * progressBar.getMaximum()));
+          }
+      });
     }
 
     public void startThread() {

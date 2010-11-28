@@ -30,44 +30,44 @@ import pl.umk.mat.imare.reco.StaveData;
  */
 public class RealtimeFrame extends javax.swing.JInternalFrame implements RTListener {
 
-    private StaveData data;
-    private RTRecognizer capture;
-	private Timer timer = new Timer();
-	private TimerTask timeUpdateTask;
-	private SpectralPanel spectralPanel;
-	private MainGUI mainWindow = null;
-	
-    /** Creates new form RealtimeFrame */
-    public RealtimeFrame() {
+  private StaveData data;
+  private RTRecognizer capture;
+  private Timer timer = new Timer();
+  private TimerTask timeUpdateTask;
+  private SpectralPanel spectralPanel;
+  private MainGUI mainWindow = null;
 
-        initComponents();
+  /** Creates new form RealtimeFrame */
+  public RealtimeFrame() {
 
-		spectralPanel = new SpectralPanel();
-		spectrumContainingPanel.add(spectralPanel, "specPanel");
+    initComponents();
 
-        data = new StaveData();
-		stopRecordingButton.setEnabled(false);
+    spectralPanel = new SpectralPanel();
+    spectrumContainingPanel.add(spectralPanel, "specPanel");
 
-		notePanel.getStavePanel().addComponentListener(new ComponentListener() {
+    data = new StaveData();
+    stopRecordingButton.setEnabled(false);
 
-			@Override
-			public void componentResized(ComponentEvent e) {
-				notePanel.scrollToEnd();
-			}
+    notePanel.getStavePanel().addComponentListener(new ComponentListener() {
 
-			@Override
-			public void componentMoved(ComponentEvent e) {
-			}
+      @Override
+      public void componentResized(ComponentEvent e) {
+        notePanel.scrollToEnd();
+      }
 
-			@Override
-			public void componentShown(ComponentEvent e) {
-			}
+      @Override
+      public void componentMoved(ComponentEvent e) {
+      }
 
-			@Override
-			public void componentHidden(ComponentEvent e) {
-			}
-		});
-    }
+      @Override
+      public void componentShown(ComponentEvent e) {
+      }
+
+      @Override
+      public void componentHidden(ComponentEvent e) {
+      }
+    });
+  }
 
     /** This method is called from within the constructor to
      * initialize the form.
