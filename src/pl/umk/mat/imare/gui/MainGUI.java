@@ -63,7 +63,7 @@ public class MainGUI extends javax.swing.JFrame implements ProgressListener {
 		desktopPane.add(noteFrame);
 		desktopPane.add(recoFrame);
 
-		setNotes(null);
+//		setNotes(null);
 		setOpenedWave(null);
 //		disableSaveButtons();
 		try {
@@ -118,28 +118,20 @@ public class MainGUI extends javax.swing.JFrame implements ProgressListener {
 
     jToolBar1 = new javax.swing.JToolBar();
     btnOpenWave = new javax.swing.JButton();
-    btnExportMidi = new javax.swing.JButton();
-    jSeparator3 = new javax.swing.JToolBar.Separator();
     btnPreferences = new javax.swing.JButton();
-    jSeparator4 = new javax.swing.JToolBar.Separator();
     btnAbout = new javax.swing.JButton();
     desktopPane = new javax.swing.JDesktopPane();
     menuBar = new javax.swing.JMenuBar();
     fileMenu = new javax.swing.JMenu();
-    jSeparator1 = new javax.swing.JPopupMenu.Separator();
     miOpenWave = new javax.swing.JMenuItem();
     mRecentItems = new javax.swing.JMenu();
     miRealTime = new javax.swing.JMenuItem();
-    miExportToMIDI = new javax.swing.JMenuItem();
-    jSeparator2 = new javax.swing.JPopupMenu.Separator();
+    jSeparator1 = new javax.swing.JPopupMenu.Separator();
     miClose = new javax.swing.JMenuItem();
     toolsMenu = new javax.swing.JMenu();
     miRecognition = new javax.swing.JMenuItem();
     miOptions = new javax.swing.JMenuItem();
     jMenu1 = new javax.swing.JMenu();
-    miWAVE = new javax.swing.JMenuItem();
-    miNotes = new javax.swing.JMenuItem();
-    jSeparator5 = new javax.swing.JPopupMenu.Separator();
     miLayoutVertically = new javax.swing.JMenuItem();
     miLayoutHorizontally = new javax.swing.JMenuItem();
     miLayoutCascade = new javax.swing.JMenuItem();
@@ -177,14 +169,6 @@ public class MainGUI extends javax.swing.JFrame implements ProgressListener {
     });
     jToolBar1.add(btnOpenWave);
 
-    btnExportMidi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/umk/mat/imare/gui/gfx/save_as.png"))); // NOI18N
-    btnExportMidi.setToolTipText("Zapisz projekt jako...");
-    btnExportMidi.setFocusable(false);
-    btnExportMidi.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-    btnExportMidi.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-    jToolBar1.add(btnExportMidi);
-    jToolBar1.add(jSeparator3);
-
     btnPreferences.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/umk/mat/imare/gui/gfx/configure.png"))); // NOI18N
     btnPreferences.setToolTipText("Preferencje...");
     btnPreferences.setFocusable(false);
@@ -196,7 +180,6 @@ public class MainGUI extends javax.swing.JFrame implements ProgressListener {
       }
     });
     jToolBar1.add(btnPreferences);
-    jToolBar1.add(jSeparator4);
 
     btnAbout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/umk/mat/imare/gui/gfx/help.png"))); // NOI18N
     btnAbout.setToolTipText("O programie...");
@@ -230,7 +213,6 @@ public class MainGUI extends javax.swing.JFrame implements ProgressListener {
     getContentPane().add(desktopPane, gridBagConstraints);
 
     fileMenu.setText("Projekt");
-    fileMenu.add(jSeparator1);
 
     miOpenWave.setText("Otwórz plik audio");
     miOpenWave.addActionListener(new java.awt.event.ActionListener() {
@@ -255,15 +237,7 @@ public class MainGUI extends javax.swing.JFrame implements ProgressListener {
       }
     });
     fileMenu.add(miRealTime);
-
-    miExportToMIDI.setText("Eksport do MIDI");
-    miExportToMIDI.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        miExportToMIDIActionPerformed(evt);
-      }
-    });
-    fileMenu.add(miExportToMIDI);
-    fileMenu.add(jSeparator2);
+    fileMenu.add(jSeparator1);
 
     miClose.setText("Zamknij");
     miClose.addActionListener(new java.awt.event.ActionListener() {
@@ -275,14 +249,14 @@ public class MainGUI extends javax.swing.JFrame implements ProgressListener {
 
     menuBar.add(fileMenu);
 
-    toolsMenu.setText("Narzędzia");
+    toolsMenu.setText("Ustawienia");
     toolsMenu.addChangeListener(new javax.swing.event.ChangeListener() {
       public void stateChanged(javax.swing.event.ChangeEvent evt) {
         toolsMenuStateChanged(evt);
       }
     });
 
-    miRecognition.setText("Rozpoznawanie");
+    miRecognition.setText("Transkrypcja...");
     miRecognition.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         miRecognitionActionPerformed(evt);
@@ -301,23 +275,6 @@ public class MainGUI extends javax.swing.JFrame implements ProgressListener {
     menuBar.add(toolsMenu);
 
     jMenu1.setText("Okna");
-
-    miWAVE.setText("Strumień Audio");
-    miWAVE.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        miWAVEActionPerformed(evt);
-      }
-    });
-    jMenu1.add(miWAVE);
-
-    miNotes.setText("Nuty");
-    miNotes.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        miNotesActionPerformed(evt);
-      }
-    });
-    jMenu1.add(miNotes);
-    jMenu1.add(jSeparator5);
 
     miLayoutVertically.setText("Ułóż pionowo");
     miLayoutVertically.addActionListener(new java.awt.event.ActionListener() {
@@ -360,7 +317,7 @@ public class MainGUI extends javax.swing.JFrame implements ProgressListener {
     setJMenuBar(menuBar);
 
     java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-    setBounds((screenSize.width-931)/2, (screenSize.height-734)/2, 931, 734);
+    setBounds((screenSize.width-464)/2, (screenSize.height-399)/2, 464, 399);
   }// </editor-fold>//GEN-END:initComponents
 
     private void miCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miCloseActionPerformed
@@ -416,49 +373,10 @@ public class MainGUI extends javax.swing.JFrame implements ProgressListener {
       }
     }//GEN-LAST:event_miOpenWaveActionPerformed
 
-    private void miWAVEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miWAVEActionPerformed
-//        RecognizerOptionsPanel rop = new RecognizerOptionsPanel();
-//        JFrame jf = new JFrame("Opcje");
-//        jf.getContentPane().add(rop);
-//        rop.setBounds(20, 20, 400, 400);
-//        jf.setBounds(20, 20, 400, 400);
-//        jf.setVisible(true);
-//        rop.setVisible(true);
-
-		if (openedWave == null) {
-			JOptionPane.showMessageDialog(this,
-					"Nie wczytano jeszcze pliku dźwiękowego.",
-					"Brak pliku dźwiękowego",
-					JOptionPane.INFORMATION_MESSAGE);
-			return;
-		}
-
-// To niepotrzebne bo waveFrame powinien byc dostepny juz od razu
-//		if(wavePlayerFrame == null) {
-//			wavePlayerFrame = new WavePlayer(openedWave);
-//		}
-
-		showWaveFrame();
-    }//GEN-LAST:event_miWAVEActionPerformed
-
     private void miAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAboutActionPerformed
 		AboutBox ab = new AboutBox(this, true);
 		ab.setVisible(true);
     }//GEN-LAST:event_miAboutActionPerformed
-
-	private void miNotesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miNotesActionPerformed
-		if (noteFrame == null) {
-			noteFrame = new NoteFrame();
-			desktopPane.add(noteFrame);
-		}
-		noteFrame.setNotes(notes);
-		showNoteFrame();
-		try {
-			noteFrame.setSelected(true);
-		} catch (PropertyVetoException ex) {
-			Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
-		}
-	}//GEN-LAST:event_miNotesActionPerformed
 
 		private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
 		}//GEN-LAST:event_formComponentResized
@@ -626,12 +544,6 @@ public class MainGUI extends javax.swing.JFrame implements ProgressListener {
 									}
 								}//GEN-LAST:event_formWindowClosed
 
-                                                                private void miExportToMIDIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miExportToMIDIActionPerformed
-//																	if ((noteFrame != null) && (notes != null)) {
-//																		noteFrame.exportMidi();
-//																	}
-                                                                }//GEN-LAST:event_miExportToMIDIActionPerformed
-
 																private void miLayoutVerticallyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miLayoutVerticallyActionPerformed
 																	layoutWindowsVertically();
 																}//GEN-LAST:event_miLayoutVerticallyActionPerformed
@@ -733,7 +645,6 @@ public class MainGUI extends javax.swing.JFrame implements ProgressListener {
 	}
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton btnAbout;
-  private javax.swing.JButton btnExportMidi;
   private javax.swing.JButton btnOpenWave;
   private javax.swing.JButton btnPreferences;
   private javax.swing.JDesktopPane desktopPane;
@@ -741,25 +652,18 @@ public class MainGUI extends javax.swing.JFrame implements ProgressListener {
   private javax.swing.JMenu helpMenu;
   private javax.swing.JMenu jMenu1;
   private javax.swing.JPopupMenu.Separator jSeparator1;
-  private javax.swing.JPopupMenu.Separator jSeparator2;
-  private javax.swing.JToolBar.Separator jSeparator3;
-  private javax.swing.JToolBar.Separator jSeparator4;
-  private javax.swing.JPopupMenu.Separator jSeparator5;
   private javax.swing.JToolBar jToolBar1;
   private javax.swing.JMenu mRecentItems;
   private javax.swing.JMenuBar menuBar;
   private javax.swing.JMenuItem miAbout;
   private javax.swing.JMenuItem miClose;
-  private javax.swing.JMenuItem miExportToMIDI;
   private javax.swing.JMenuItem miLayoutCascade;
   private javax.swing.JMenuItem miLayoutHorizontally;
   private javax.swing.JMenuItem miLayoutVertically;
-  private javax.swing.JMenuItem miNotes;
   private javax.swing.JMenuItem miOpenWave;
   private javax.swing.JMenuItem miOptions;
   private javax.swing.JMenuItem miRealTime;
   private javax.swing.JMenuItem miRecognition;
-  private javax.swing.JMenuItem miWAVE;
   private javax.swing.JMenu toolsMenu;
   // End of variables declaration//GEN-END:variables
 
@@ -775,7 +679,7 @@ public class MainGUI extends javax.swing.JFrame implements ProgressListener {
 	 * @param notes
 	 */
 	public void setNotes(StaveData notes) {
-		miNotes.setEnabled(notes != null);
+//		miNotes.setEnabled(notes != null);
 		this.notes = notes;
 		noteFrame.setNotes(notes);
 
@@ -795,7 +699,7 @@ public class MainGUI extends javax.swing.JFrame implements ProgressListener {
 	 * @param openedWave
 	 */
 	public void setOpenedWave(Wave openedWave) {
-		miWAVE.setEnabled(openedWave != null);
+//		miWAVE.setEnabled(openedWave != null);
 		this.openedWave = openedWave;
 		if (openedWave == null) {
 			setTitle("IMARE");

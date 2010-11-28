@@ -43,7 +43,9 @@ import pl.umk.mat.imare.reco.StaveData;
  */
 public class NoteFrame extends javax.swing.JInternalFrame {
 
-
+  public NoteFrame() {
+    initComponents();
+  }
 //    private void initMidi() {
 //        /*try {
 //        midi = new MidiPlayer();
