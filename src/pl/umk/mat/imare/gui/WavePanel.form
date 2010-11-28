@@ -185,7 +185,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <Component id="timePanel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Component id="layerPane" pref="217" max="32767" attributes="0"/>
+                  <Component id="layerPane" pref="225" max="32767" attributes="0"/>
                   <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
                   <Component id="scrollBar" min="-2" max="-2" attributes="0"/>
               </Group>

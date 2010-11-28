@@ -25,7 +25,6 @@ import javax.sound.midi.Sequencer;
 import javax.sound.midi.ShortMessage;
 import javax.sound.midi.Synthesizer;
 import javax.sound.midi.Track;
-import pl.umk.mat.imare.io.LilySong;
 import pl.umk.mat.imare.reco.Note;
 import pl.umk.mat.imare.reco.Sonst;
 import pl.umk.mat.imare.reco.StaveData;

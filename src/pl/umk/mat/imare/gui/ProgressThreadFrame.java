@@ -12,12 +12,9 @@
 package pl.umk.mat.imare.gui;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.beans.PropertyVetoException;
-import java.lang.reflect.InvocationTargetException;
-import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JDesktopPane;
 
 /**
@@ -39,6 +36,7 @@ abstract public class ProgressThreadFrame extends javax.swing.JInternalFrame {
     public ProgressThreadFrame(JDesktopPane parent) {
         initComponents();
         parent.add(this);
+        parent.validate();
         int x = (parent.getWidth() - getWidth()) / 2;
         int y = (parent.getHeight() - getHeight()) / 2;
         setLocation(x, y);
@@ -47,7 +45,7 @@ abstract public class ProgressThreadFrame extends javax.swing.JInternalFrame {
         try {
             setSelected(true);
         } catch (PropertyVetoException ex) {
-            Logger.getLogger(ProgressFrame.class.getName()).log(Level.SEVERE, null, ex);
+            MainGUI.displayError(ex);
         }
     }
 
@@ -111,10 +109,8 @@ abstract public class ProgressThreadFrame extends javax.swing.JInternalFrame {
                     after();
                 }
             });
-        } catch (InterruptedException ex) {
-            Logger.getLogger(ProgressFrame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InvocationTargetException ex) {
-            Logger.getLogger(ProgressFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            MainGUI.displayError(ex);
         }
 
         EventQueue.invokeLater(new Runnable() {

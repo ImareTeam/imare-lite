@@ -12,7 +12,6 @@
 package pl.umk.mat.imare.gui;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -21,14 +20,12 @@ import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sound.sampled.AudioFormat;
-import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import pl.umk.mat.imare.io.Wave;
 import pl.umk.mat.imare.reco.Recognizer;
-import pl.umk.mat.imare.reco.WindowFunctionBlackman;
 
 /**
  *
@@ -359,7 +356,7 @@ public class WavePanel extends javax.swing.JPanel implements PlayListener {
                 }
                 Recognizer recognizer = new Recognizer(wave,iStart,iEnd);
                 RecognitionProgress recogProg = new RecognitionProgress(wave.filename, recognizer, true);
-                mainWindow.addFrame(recogProg, true);
+                mainWindow.addFrame(recogProg);
                 recognizer.start();
             } catch (Exception ex) {
                 Logger.getLogger(FFTFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -397,7 +394,7 @@ public class WavePanel extends javax.swing.JPanel implements PlayListener {
 		int data[] = new int[len];
 		wave.readMono(data, (int)(d1/length * wave.getSampleCount()));
 		FFTFrame frame = new FFTFrame(data,(int) wave.getAudioFormat().getFrameRate(), wave.getAudioFormat().getSampleSizeInBits());
-		mainWindow.addFrame(frame, true);
+		mainWindow.addFrame(frame);
 }//GEN-LAST:event_fftButtonActionPerformed
 
 	private void zoomInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zoomInActionPerformed
@@ -472,15 +469,7 @@ public class WavePanel extends javax.swing.JPanel implements PlayListener {
 }//GEN-LAST:event_scrollBarAdjustmentValueChanged
 
 	private void formAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_formAncestorAdded
-		Component c = getParent();
-		while(!(c instanceof MainGUI) && c != null) c = c.getParent();
-
-		if(c != null) {
-			mainWindow = (MainGUI)c;
-			mainWindow.showProjectPane(true);
-		}
 	}//GEN-LAST:event_formAncestorAdded
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel containingPanel;
@@ -720,7 +709,7 @@ public class WavePanel extends javax.swing.JPanel implements PlayListener {
                         Graphics2D graf = (Graphics2D) img.getGraphics();
                         graf.drawImage(waveImage, 0, 0, null);
         } catch (Exception ex) {
-            Logger.getLogger(OldWavePlayer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(WavePlayer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

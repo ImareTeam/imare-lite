@@ -69,7 +69,6 @@ public abstract class Config {
                 write("ShowStartupScreen", "1");
                 write("RecentItemsNumber", "5");
                 write("RecentAudioFiles", "(puste)");
-                write("RecentProjects", "(puste)");
                 save();
             }
 

@@ -30,12 +30,8 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="recognizerOptionsPanel1" alignment="0" pref="554" max="32767" attributes="0"/>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="defaultsButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="239" max="32767" attributes="0"/>
-                      <Component id="recognizeButton" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="panel" alignment="0" pref="554" max="32767" attributes="0"/>
+                  <Component id="defaultsButton" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -45,27 +41,19 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="recognizerOptionsPanel1" pref="385" max="32767" attributes="0"/>
+              <Component id="panel" pref="389" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="recognizeButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="defaultsButton" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
+              <Component id="defaultsButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="pl.umk.mat.imare.gui.RecognizerOptionsPanel" name="recognizerOptionsPanel1">
-    </Component>
-    <Component class="javax.swing.JButton" name="recognizeButton">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Rozpocznij Rozpoznawanie"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="recognizeButtonActionPerformed"/>
-      </Events>
+    <Component class="pl.umk.mat.imare.gui.RecognizerOptionsPanel" name="panel">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="17"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="defaultsButton">
       <Properties>

@@ -22,7 +22,6 @@ import java.util.logging.Logger;
 import javax.sound.sampled.AudioFormat;
 import javax.swing.JComponent;
 import javax.swing.JDesktopPane;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
@@ -31,7 +30,7 @@ import pl.umk.mat.imare.reco.Recognizer;
 
 /**
  *
- * @author Tyczo, PieterEr
+ * @author Tyczo
  */
 public class WavePlayer extends javax.swing.JInternalFrame implements PlayListener {
 
@@ -389,7 +388,7 @@ public class WavePlayer extends javax.swing.JInternalFrame implements PlayListen
           iEnd = wave.getSampleCount();
         }
 
-        Recognizer recognizer = new Recognizer(wave, iStart, iEnd);
+        Recognizer recognizer = MainGUI.getRecognizer(wave, iStart, iEnd);
         RecognitionProgress recogProg = new RecognitionProgress(wave.filename, recognizer, true);
         JDesktopPane desktop = getDesktopPane();
         desktop.add(recogProg);
@@ -400,8 +399,7 @@ public class WavePlayer extends javax.swing.JInternalFrame implements PlayListen
         desktop.validate();
         recognizer.start();
       } catch (Exception ex) {
-        //Logger.getLogger(FFTFrame.class.getName()).log(Level.SEVERE, null, ex);
-        JOptionPane.showMessageDialog(null, "Wrong size exception caught!", "Error", JOptionPane.ERROR_MESSAGE);
+        MainGUI.displayError(ex, this);
       }
     }//GEN-LAST:event_recognizeButtonActionPerformed
 
