@@ -17,8 +17,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.sound.sampled.AudioFormat;
 import javax.swing.JComponent;
 import javax.swing.JDesktopPane;
@@ -820,7 +818,7 @@ public class WavePlayer extends javax.swing.JInternalFrame implements PlayListen
       Graphics2D graf = (Graphics2D) img.getGraphics();
       graf.drawImage(waveImage, 0, 0, null);
     } catch (Exception ex) {
-      Logger.getLogger(WavePlayer.class.getName()).log(Level.SEVERE, null, ex);
+      MainGUI.displayError(ex,this);
     }
   }
 

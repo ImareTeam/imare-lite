@@ -25,8 +25,6 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import pl.umk.mat.imare.reco.Note;
 import pl.umk.mat.imare.reco.Sonst;
@@ -116,7 +114,7 @@ public class StavePanel extends javax.swing.JPanel {
 					trebleClef = ImageIO.read(getClass().getResource("/pl/umk/mat/imare/gui/gfx/nuty/treble_clef.png"));
 					bassClef = ImageIO.read(getClass().getResource("/pl/umk/mat/imare/gui/gfx/nuty/bassclef.png"));
 		} catch (IOException ex) {
-			Logger.getLogger(StavePanel.class.getName()).log(Level.SEVERE, null, ex);
+			MainGUI.displayError(ex);
 		}
 	}
 

@@ -16,8 +16,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import pl.umk.mat.imare.reco.SequentialFFT;
 import pl.umk.mat.imare.reco.WindowFunctionBlackman;
 import pl.umk.mat.imare.reco.WindowFunctionBlackmanNutall;
@@ -273,7 +271,7 @@ public class FFTFrame extends javax.swing.JInternalFrame {
             try {
                 drawFFT();
             } catch (Exception ex) {
-                Logger.getLogger(FFTFrame.class.getName()).log(Level.SEVERE, null, ex);
+                MainGUI.displayError(ex,this);
             }
         }
 }//GEN-LAST:event_windowSizeActionPerformed
@@ -282,7 +280,7 @@ public class FFTFrame extends javax.swing.JInternalFrame {
         try {
             drawFFT();
         } catch (Exception ex) {
-            Logger.getLogger(FFTFrame.class.getName()).log(Level.SEVERE, null, ex);
+            MainGUI.displayError(ex,this);
         }
     }//GEN-LAST:event_wFunctionActionPerformed
 
@@ -364,7 +362,7 @@ public class FFTFrame extends javax.swing.JInternalFrame {
         try {
                 drawFFT();
             } catch (Exception ex) {
-                Logger.getLogger(FFTFrame.class.getName()).log(Level.SEVERE, null, ex);
+                MainGUI.displayError(ex,this);
             }
     }//GEN-LAST:event_scaleBoxActionPerformed
 

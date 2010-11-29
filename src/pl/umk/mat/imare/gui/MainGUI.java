@@ -17,8 +17,6 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
@@ -39,6 +37,8 @@ public class MainGUI extends javax.swing.JFrame {
 
   private static RecognizerOptionsFrame options = null;
   private String[] recentAudioFiles = null;
+  private RealtimeFrame realtime = null;
+  private final AboutBox about;
 
   public static Recognizer getRecognizer(Wave wave, int iStart, int iEnd) {
     return options.panel.getRecognizer(wave, iStart, iEnd);
@@ -47,10 +47,11 @@ public class MainGUI extends javax.swing.JFrame {
   /** Creates new form MainGUI */
   public MainGUI() {
     initComponents();
+    about = new AboutBox(this,false);
 
     if (options == null) {
       options = new RecognizerOptionsFrame();
-      addFrame(options);
+      addFrame(options,false);
     }
 
     try {
@@ -303,13 +304,12 @@ public class MainGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_miOpenWaveActionPerformed
 
     private void miAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAboutActionPerformed
-      AboutBox ab = new AboutBox(this, true);
-      ab.setVisible(true);
+      about.setVisible(true);
     }//GEN-LAST:event_miAboutActionPerformed
 
   private void openAudioFile(final File file) {
 
-    final ProgressThreadFrame frame = new ProgressThreadFrame(desktopPane) {
+    final ProgressThreadFrame frame = new ProgressThreadFrame() {
 
       Wave wave = null;
       ProgressListener pl = new ProgressListener() {
@@ -345,6 +345,7 @@ public class MainGUI extends javax.swing.JFrame {
       }
     };
 
+    addFrame(frame);
     frame.startThread();
   }
 
@@ -427,7 +428,23 @@ public class MainGUI extends javax.swing.JFrame {
 																}//GEN-LAST:event_miLayoutCascadeActionPerformed
 
 																private void miRealTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRealTimeActionPerformed
-                                  addFrame(new RealtimeFrame());
+
+                                  if (realtime != null) {
+                                    try {
+                                      realtime.setSelected(true);
+                                    } catch (PropertyVetoException ex) {
+                                    }
+                                  } else {
+                                    realtime = new RealtimeFrame();
+                                    realtime.setWindowCloseListener(new ActionListener() {
+
+                                      @Override
+                                      public void actionPerformed(ActionEvent e) {
+                                        realtime = null;
+                                      }
+                                    });
+                                    addFrame(realtime);
+                                  }
 																}//GEN-LAST:event_miRealTimeActionPerformed
 
   /**
@@ -448,7 +465,7 @@ public class MainGUI extends javax.swing.JFrame {
     try {
       Config.init();
     } catch (IOException ex) {
-      JOptionPane.showMessageDialog(null, ex, "Błąd", JOptionPane.ERROR_MESSAGE);
+      displayError(ex);
     }
 
     try {
@@ -456,7 +473,7 @@ public class MainGUI extends javax.swing.JFrame {
     } catch (ClassNotFoundException ex) {
     } catch (UnsupportedLookAndFeelException ex) {
     } catch (Exception ex) {
-      JOptionPane.showMessageDialog(null, ex, "Błąd", JOptionPane.ERROR_MESSAGE);
+      displayError(ex);
     }
 
     MainGUI gui = new MainGUI();
@@ -559,14 +576,17 @@ public class MainGUI extends javax.swing.JFrame {
       try {
         frame.setSelected(true);
       } catch (PropertyVetoException ex) {
-        Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
       }
     }
   }
 
   public final void addFrame(JInternalFrame frame) {
+    addFrame(frame, true);
+  }
+
+  public final void addFrame(JInternalFrame frame, boolean showAfterAdd) {
     desktopPane.add(frame);
     validate();
-    frame.setVisible(true);
+    frame.setVisible(showAfterAdd);
   }
 }

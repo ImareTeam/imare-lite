@@ -17,8 +17,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.sound.sampled.AudioFormat;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -359,9 +357,7 @@ public class WavePanel extends javax.swing.JPanel implements PlayListener {
                 mainWindow.addFrame(recogProg);
                 recognizer.start();
             } catch (Exception ex) {
-                Logger.getLogger(FFTFrame.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(null, "Wrong size exception caught!", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
+              MainGUI.displayError(ex,this);
             }
 }//GEN-LAST:event_recognizeButtonActionPerformed
 
@@ -709,7 +705,7 @@ public class WavePanel extends javax.swing.JPanel implements PlayListener {
                         Graphics2D graf = (Graphics2D) img.getGraphics();
                         graf.drawImage(waveImage, 0, 0, null);
         } catch (Exception ex) {
-            Logger.getLogger(WavePlayer.class.getName()).log(Level.SEVERE, null, ex);
+            MainGUI.displayError(ex,this);
         }
     }
 

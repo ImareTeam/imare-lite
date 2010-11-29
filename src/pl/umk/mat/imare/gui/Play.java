@@ -5,8 +5,6 @@
 package pl.umk.mat.imare.gui;
 
 import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
@@ -68,7 +66,6 @@ public class Play implements Runnable {
                     try {
                         Thread.sleep(1);
                     } catch (InterruptedException ex) {
-                        Logger.getLogger(Play.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
                     if (pause) {
@@ -121,7 +118,7 @@ public class Play implements Runnable {
             }
 
         } catch (InterruptedException ex) {
-            Logger.getLogger(Play.class.getName()).log(Level.SEVERE, null, ex);
+            MainGUI.displayError(ex);
         } finally {
             notifyFinished();
         }

@@ -7,8 +7,6 @@ package pl.umk.mat.imare.io;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Result;
@@ -21,6 +19,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import pl.umk.mat.imare.gui.MainGUI;
 
 
 /**
@@ -72,11 +71,8 @@ public abstract class Config {
                 save();
             }
 
-        } catch (java.io.IOException ex) {
-            Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
-
         } catch (Exception ex) {
-            Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
+            MainGUI.displayError(ex);
         }
     }
 
@@ -86,7 +82,7 @@ public abstract class Config {
         try {
             init();
         } catch (IOException ex) {
-            Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
+            MainGUI.displayError(ex);
         }
     }
 
@@ -121,7 +117,7 @@ public abstract class Config {
             DocumentBuilder db = dbf.newDocumentBuilder();
             cfgDoc = db.parse(cfgFile);
         } catch (Exception ex) {
-            Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
+            MainGUI.displayError(ex);
         }
     }
 
@@ -133,7 +129,7 @@ public abstract class Config {
             Result dst = new StreamResult(cfgFile);
             transformer.transform(src, dst);
         } catch (TransformerException ex) {
-            Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
+            MainGUI.displayError(ex);
         }
     }
 

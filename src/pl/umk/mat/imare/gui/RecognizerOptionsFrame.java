@@ -38,7 +38,7 @@ public class RecognizerOptionsFrame extends javax.swing.JInternalFrame {
 
     setClosable(true);
     setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
-    setTitle("Ustawienia Rozpoznawania");
+    setTitle("Ustawienia transkrypcji");
     addAncestorListener(new javax.swing.event.AncestorListener() {
       public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
       }
@@ -60,21 +60,21 @@ public class RecognizerOptionsFrame extends javax.swing.JInternalFrame {
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+      .addGroup(layout.createSequentialGroup()
         .addContainerGap()
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addComponent(panel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 554, Short.MAX_VALUE)
-          .addComponent(defaultsButton, javax.swing.GroupLayout.Alignment.LEADING))
-        .addContainerGap())
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(defaultsButton))
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+      .addGroup(layout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, 389, Short.MAX_VALUE)
+        .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, 529, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(defaultsButton)
-        .addContainerGap())
+        .addContainerGap(16, Short.MAX_VALUE))
     );
 
     pack();

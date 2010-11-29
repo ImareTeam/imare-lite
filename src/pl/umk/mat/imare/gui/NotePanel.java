@@ -18,8 +18,6 @@ import java.awt.event.ComponentListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.sound.midi.Instrument;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MetaEventListener;
@@ -283,7 +281,7 @@ public class NotePanel extends javax.swing.JPanel implements MetaEventListener, 
 			midi.createFromNotes(stavePanel.getStaveData());
                         midi.setPosition(pos);
 		} catch (InvalidMidiDataException ex) {
-			Logger.getLogger(NoteFrame.class.getName()).log(Level.SEVERE, null, ex);
+			MainGUI.displayError(ex,this);
 		}
 		String s;
 		if(instrumentComboBox.getSelectedItem() != null) {
@@ -298,7 +296,7 @@ public class NotePanel extends javax.swing.JPanel implements MetaEventListener, 
 				midi.setSequenceInstrument(0, ins);
 				midi.setPosition(p);
 			} catch (InvalidMidiDataException ex) {
-				Logger.getLogger(NoteFrame.class.getName()).log(Level.SEVERE, null, ex);
+				MainGUI.displayError(ex,this);
 			}
 		}
 		if (!stopButton.isEnabled() && cursorPanel.getLocation().x==-1) {
@@ -355,7 +353,7 @@ public class NotePanel extends javax.swing.JPanel implements MetaEventListener, 
           midi.setSequenceInstrument(0, ins);
           midi.setPosition(p);
         } catch (InvalidMidiDataException ex) {
-          Logger.getLogger(NoteFrame.class.getName()).log(Level.SEVERE, null, ex);
+          MainGUI.displayError(ex,this);
         }
       }
     }
@@ -394,8 +392,7 @@ public class NotePanel extends javax.swing.JPanel implements MetaEventListener, 
     try {
       midi.saveSequence(file);
     } catch (IOException ex) {
-      //Logger.getLogger(NoteFrame.class.getName()).log(Level.SEVERE, null, ex);
-      JOptionPane.showMessageDialog(null, "Nie można utworzyć pliku", "Nie można utworzyć pliku", JOptionPane.ERROR_MESSAGE);
+      MainGUI.displayError(ex,this);
     }
   }
 
@@ -444,23 +441,6 @@ public class NotePanel extends javax.swing.JPanel implements MetaEventListener, 
 		}
 	}
 
-	private void setTime() {
-//		if (midi == null) {
-//			return;
-//		}
-//		DecimalFormat df = new DecimalFormat("00.000");
-//		double length = midi.getLength() / 1000000.0;
-//		String str = "<html><b>Długość:</b> ";
-//
-//		if (length >= 60) {
-//
-//			str += Integer.toString((int) (length / 60)) + ":";
-//			length %= 60;
-//		}
-//		str += df.format(length) + "</html>";
-//		lengthLabel.setText(str);
-	}
-
 	public void setNotes(StaveData notes) {
 		stavePanel.setStaveData(notes);
 		try {
@@ -469,33 +449,9 @@ public class NotePanel extends javax.swing.JPanel implements MetaEventListener, 
 				midi.createFromNotes(sd);
 			}
 
-			setTime();
-
 		} catch (InvalidMidiDataException ex) {
-			Logger.getLogger(NoteFrame.class.getName()).log(Level.SEVERE, null, ex);
+			MainGUI.displayError(ex,this);
 		}
-
-//        layerPane.setBackground(Color.white);
-//        scrollPane.setBackground(Color.white);
-//        stavePanel.setBackground(Color.white);
-//
-//        layerPane.setSize(stavePanel.getSize());
-//        layerPane.setPreferredSize(stavePanel.getSize());
-//
-//        cursorPanel = new JPanel();
-//        cursorPanel.setMaximumSize(new Dimension(1, 0));
-//        cursorPanel.setMinimumSize(new Dimension(1, 0));
-//        cursorPanel.setSize(1, stavePanel.getHeight());
-//        cursorPanel.setBackground(Color.red);
-//
-//        cursorPanel.setLocation(-1, 0);
-//        layerPane.add(cursorPanel, new Integer(1));
-//
-//        stavePanel.setSize(
-//                Math.max(layerPane.getWidth(), scrollPane.getWidth()),
-//                Math.max(layerPane.getHeight(), scrollPane.getHeight()));
-//        timePanel.setSize(stavePanel.getWidth(), timePanel.getHeight());
-//        drawTime();
 	}
 
 	public void addNote(Note n) {
@@ -507,10 +463,8 @@ public class NotePanel extends javax.swing.JPanel implements MetaEventListener, 
 				midi.createFromNotes(sd);
 			}
 		} catch (InvalidMidiDataException ex) {
-			Logger.getLogger(NoteFrame.class.getName()).log(Level.SEVERE, null, ex);
+			MainGUI.displayError(ex,this);
 		}
-
-		setTime();
 	}
 
 	public void close() {
@@ -539,7 +493,6 @@ public class NotePanel extends javax.swing.JPanel implements MetaEventListener, 
 	}
 
 	public void scrollToEnd() {
-//		scrollPane.getHorizontalScrollBar().setValue(scrollPane.getHorizontalScrollBar().getValue()+scrollPane.getHorizontalScrollBar().getVisibleAmount());
 		scrollPane.getHorizontalScrollBar().setValue(scrollPane.getHorizontalScrollBar().getMaximum());
 	}
 

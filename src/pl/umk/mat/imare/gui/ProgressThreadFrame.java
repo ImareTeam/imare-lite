@@ -33,20 +33,8 @@ abstract public class ProgressThreadFrame extends javax.swing.JInternalFrame {
     private int count = 0;
 
     /** Creates new form ProgressFrame */
-    public ProgressThreadFrame(JDesktopPane parent) {
+    public ProgressThreadFrame() {
         initComponents();
-        parent.add(this);
-        parent.validate();
-        int x = (parent.getWidth() - getWidth()) / 2;
-        int y = (parent.getHeight() - getHeight()) / 2;
-        setLocation(x, y);
-
-        setVisible(true);
-        try {
-            setSelected(true);
-        } catch (PropertyVetoException ex) {
-            MainGUI.displayError(ex);
-        }
     }
 
     @SuppressWarnings("unchecked")
@@ -171,7 +159,22 @@ abstract public class ProgressThreadFrame extends javax.swing.JInternalFrame {
     }
 
     public void startThread() {
-       new Thread(new Runnable() {
+
+      JDesktopPane parent = getDesktopPane();
+      if (parent != null) {
+        int x = (parent.getWidth() - getWidth()) / 2;
+        int y = (parent.getHeight() - getHeight()) / 2;
+        setLocation(x, y);
+      }
+
+      setVisible(true);
+      try {
+          setSelected(true);
+      } catch (PropertyVetoException ex) {
+          MainGUI.displayError(ex);
+      }
+
+      new Thread(new Runnable() {
             @Override
             public void run() {
                 try

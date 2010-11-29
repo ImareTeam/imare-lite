@@ -10,12 +10,11 @@
  */
 package pl.umk.mat.imare.gui;
 
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.sound.sampled.LineUnavailableException;
 import pl.umk.mat.imare.reco.Note;
 import pl.umk.mat.imare.reco.RTListener;
@@ -171,7 +170,7 @@ public class RealtimeFrame extends javax.swing.JInternalFrame implements RTListe
       capture.addListener(spectralPanel);
       capture.start();
     } catch (LineUnavailableException ex) {
-      Logger.getLogger(RealtimeFrame.class.getName()).log(Level.SEVERE, null, ex);
+      MainGUI.displayError(ex,this);
       capture = null;
     }
 
@@ -231,60 +230,8 @@ public class RealtimeFrame extends javax.swing.JInternalFrame implements RTListe
     private javax.swing.JToolBar toolBar;
     // End of variables declaration//GEN-END:variables
 
-  /*
-  @Override
-  public void bufferFilled(AudioCaptureThread act, int[] buffer, int samples) {
-  Wave wave = Wave.fromSamples(act.getFormat(), buffer);
-  Recognizer reco = new Recognizer(wave);
-  reco.addRecognitionListener(this);
-  reco.start();
-  }
-
-  @Override
-  public void recognitionFinished(Recognizer recognizer, boolean cancelled) {
-  Transcriber t = new Transcriber(recognizer.getVoice());
-  t.addTranscriptionListener(this);
-  t.start();
-  }
-
-  @Override
-  public void progressChanged(Recognizer recognizer, float newProgress) {
-  }
-
-  @Override
-  public void transcriptionFinished(Transcriber transcriber) {
-  StaveData sd = transcriber.getStaveData();
-  //		stavePanel1.setStaveData(sd);
-  float maxOff = 0;
-
-  for (Note n : sd.top.getNotes()) {
-  n.setOffset(n.getOffset() + offset);
-  data.top.addNote(n);
-  if (n.getOffset() > maxOff) {
-  maxOff = n.getOffset();
-  }
-  }
-
-  for (Note n : sd.bottom.getNotes()) {
-  n.setOffset(n.getOffset() + offset);
-  data.bottom.addNote(n);
-  if (n.getOffset() > maxOff) {
-  maxOff = n.getOffset();
-  }
-  }
-
-  offset = maxOff;
-
-  stavePanel1.setStaveData(data);
-  //		jScrollPane1.getHorizontalScrollBar().setValue(jScrollPane1.getHorizontalScrollBar().getMaximum());
-  }
-   */
   @Override
   public void noteFound(RTRecognizer reco, Note n) {
-//        StaffData staff = (n.getPitch() >= Sonst.TOP_STAFF_LOW_PITCH_BOUND) ? data.top : data.bottom;
-//        staff.addNote(n);
-//		notePanel.setNotes(data);
-
     notePanel.addNote(n);
   }
 
@@ -304,7 +251,16 @@ public class RealtimeFrame extends javax.swing.JInternalFrame implements RTListe
     timer.purge();
     timer.cancel();
     notePanel.close();
+    if (windowCloseListener != null) {
+      windowCloseListener.actionPerformed(null);
+    }
     super.dispose();
+  }
+
+  private ActionListener windowCloseListener = null;
+
+  public void setWindowCloseListener(ActionListener listener) {
+    windowCloseListener = listener;
   }
 
   @Override
