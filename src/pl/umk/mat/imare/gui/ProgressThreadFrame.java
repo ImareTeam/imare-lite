@@ -12,10 +12,8 @@
 package pl.umk.mat.imare.gui;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.EventQueue;
 import java.beans.PropertyVetoException;
-import java.util.ArrayList;
 import javax.swing.JDesktopPane;
 
 /**
@@ -174,7 +172,7 @@ abstract public class ProgressThreadFrame extends javax.swing.JInternalFrame {
               } else if (Double.isNaN(dt)) {
                   fmt = "?";
               } else {
-                  fmt = Double.toString(Math.ceil(dt));
+                  fmt = Long.toString(Math.round(dt+0.5));
               }
               label.setText("pozostało: "+fmt+" s");
               progressBar.setValue((int)Math.floor(progress * progressBar.getMaximum()));
