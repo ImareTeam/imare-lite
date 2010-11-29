@@ -752,7 +752,8 @@ public class WavePanel extends javax.swing.JPanel implements PlayListener {
 		xPress = evt.getX();
 	}
 	public void wavePanelMouseClicked(java.awt.event.MouseEvent evt){
-		Graphics2D grafImage = (Graphics2D) waveImage.getGraphics();
+            if(odt==null || !odt.isPlaying()){
+                Graphics2D grafImage = (Graphics2D) waveImage.getGraphics();
 		grafImage.drawImage(img, 0, 0, null);
 
 		startX = 0;
@@ -763,6 +764,8 @@ public class WavePanel extends javax.swing.JPanel implements PlayListener {
 		test = true;
                 cursorPanel.setLocation(evt.getX(), 0);
 		wavePanel.repaint();
+            }
+
 	}
 	public void wavePanelMouseDragged(java.awt.event.MouseEvent evt){
 

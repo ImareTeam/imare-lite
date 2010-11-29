@@ -100,8 +100,15 @@ public class NotePanel extends javax.swing.JPanel implements MetaEventListener, 
 		midi.addMidiPlayerListener(this);
 
 		String[] s = midi.listAllInstuments();
-		Arrays.sort(s);
-		int index = Arrays.binarySearch(s, "Piano");
+                int index = -1;
+
+                if(s.length>0){
+                    String piano = s[0];
+                    Arrays.sort(s);
+                    index = Arrays.binarySearch(s, piano);
+                }
+
+		
 
 		for (int i = 0; i < s.length; i++) {
 			instrumentComboBox.addItem(s[i]);
@@ -117,7 +124,9 @@ public class NotePanel extends javax.swing.JPanel implements MetaEventListener, 
 			instrumentComboBox.setEnabled(false);
 		}
 
-		instrumentComboBox.setSelectedIndex(index);
+                if(index>=0){
+                    instrumentComboBox.setSelectedIndex(index);
+                }
 	}
 
 	/** This method is called from within the constructor to
@@ -510,4 +519,8 @@ public class NotePanel extends javax.swing.JPanel implements MetaEventListener, 
 			instrumentComboBox.setEnabled(true);
 		}
 	}
+
+        public void stopMidi(){
+            this.midi.stop();
+        }
 }
