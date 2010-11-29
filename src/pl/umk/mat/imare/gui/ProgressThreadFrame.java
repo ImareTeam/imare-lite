@@ -15,6 +15,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.beans.PropertyVetoException;
+import java.util.ArrayList;
 import javax.swing.JDesktopPane;
 
 /**
@@ -23,14 +24,19 @@ import javax.swing.JDesktopPane;
  */
 abstract public class ProgressThreadFrame extends javax.swing.JInternalFrame {
 
+    public static final int PROGRESS_HISTORY_COUNT = 10;
+
     private volatile boolean terminated = false;
     private double startTime = 0.0;
+
+    private final double[] historyX = new double[PROGRESS_HISTORY_COUNT];
+    private final double[] historyY = new double[PROGRESS_HISTORY_COUNT];
+    private int historyCount = 0;
 
     private double sumX = 0.0;
     private double sumY = 0.0;
     private double sumXY = 0.0;
     private double sumX2 = 0.0;
-    private int count = 0;
 
     /** Creates new form ProgressFrame */
     public ProgressThreadFrame() {
@@ -125,20 +131,38 @@ abstract public class ProgressThreadFrame extends javax.swing.JInternalFrame {
     }
 
     public void setProgress(final float progress) {
+
       final double t = getTime();
       sumX += t;
       sumY += progress;
       sumXY += t*progress;
       sumX2 += t*t;
-      ++count;
-      
+
       double t0 = Double.NaN;
-      double coeff = 1.0 / (sumX2 - sumX*sumX);
-      if (!Double.isInfinite(coeff)) {
-        double a = (sumXY - sumX*sumY) * coeff;
-        double b = (sumY - a*sumX)/count;
-        t0 = (1-b)/a;
+      if (historyCount < PROGRESS_HISTORY_COUNT) {
+        
+        historyX[historyCount] = t;
+        historyY[historyCount] = progress;
+        
+      } else {
+        
+        int i = historyCount % PROGRESS_HISTORY_COUNT;
+        sumX -= historyX[i];
+        sumY -= historyY[i];
+        sumXY -= historyX[i]*historyY[i];
+        sumX2 -= historyX[i]*historyX[i];
+        
+        historyX[i] = t;
+        historyY[i] = progress;
+
+        double coeff = 1.0 / (sumX2 - sumX*sumX);
+        if (!Double.isInfinite(coeff)) {
+          double a = (sumXY - sumX*sumY) * coeff;
+          double b = (sumY - a*sumX)/PROGRESS_HISTORY_COUNT;
+          t0 = (1-b)/a;
+        }
       }
+      ++historyCount;
 
       final double dt = t0 - t;
       EventQueue.invokeLater(new Runnable() {
@@ -150,7 +174,7 @@ abstract public class ProgressThreadFrame extends javax.swing.JInternalFrame {
               } else if (Double.isNaN(dt)) {
                   fmt = "?";
               } else {
-                  fmt = Long.toString(Math.round(dt));
+                  fmt = Double.toString(Math.ceil(dt));
               }
               label.setText("pozostało: "+fmt+" s");
               progressBar.setValue((int)Math.floor(progress * progressBar.getMaximum()));
