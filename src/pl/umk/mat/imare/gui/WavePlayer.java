@@ -592,17 +592,19 @@ public class WavePlayer extends javax.swing.JInternalFrame implements PlayListen
   }
 
   public void wavePanelMouseClicked(java.awt.event.MouseEvent evt) {
-    Graphics2D grafImage = (Graphics2D) waveImage.getGraphics();
-    grafImage.drawImage(img, 0, 0, null);
+      if(odt==null || !odt.isPlaying()){
+          Graphics2D grafImage = (Graphics2D) waveImage.getGraphics();
+          grafImage.drawImage(img, 0, 0, null);
 
-    startX = 0;
-    endX = wavePanel.getWidth();
-    test = false;
-    startTime.setValue(0.0);
-    endTime.setValue(0.0);
-    test = true;
-    cursorPanel.setLocation(evt.getX(), 0);
-    wavePanel.repaint();
+          startX = 0;
+          endX = wavePanel.getWidth();
+          test = false;
+          startTime.setValue(0.0);
+          endTime.setValue(0.0);
+          test = true;
+          cursorPanel.setLocation(evt.getX(), 0);
+          wavePanel.repaint();
+      }
   }
 
   public void wavePanelMouseDragged(java.awt.event.MouseEvent evt) {
