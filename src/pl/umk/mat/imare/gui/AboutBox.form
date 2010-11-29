@@ -61,6 +61,9 @@
           <Font name="Dialog" size="14" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;a href=&quot;http://www.imare.pl/&quot;&gt;www.imare.pl&lt;/a&gt;&lt;/html&gt;"/>
+        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+          <Color id="Hand Cursor"/>
+        </Property>
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel3MouseClicked"/>
@@ -84,9 +87,6 @@
     <Component class="javax.swing.JLabel" name="jLabel7">
       <Properties>
         <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div width=200&gt;&lt;center&gt;Marcin Radoszewski&lt;br /&gt;&#xa;Piotr R&#xf3;&#x17c;a&#x144;ski&lt;br /&gt;&#xa;Mariusz Tycz&lt;br /&gt;&#xa;Maciej W&#x142;och&lt;br /&gt;&#xa;Bartosz Zasada&lt;/center&gt;&lt;/div&gt;&lt;/html&gt;"/>
-        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[200, 75]"/>
-        </Property>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
@@ -120,6 +120,9 @@
     <Component class="javax.swing.JLabel" name="jLabel13">
       <Properties>
         <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;a href=&quot;http://www.javazoom.net/javalayer/javalayer.html&quot;&gt;jLayer&lt;/a&gt;&lt;/html&gt;"/>
+        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+          <Color id="Hand Cursor"/>
+        </Property>
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel13MouseClicked"/>

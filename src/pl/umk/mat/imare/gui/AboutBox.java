@@ -64,7 +64,7 @@ public class AboutBox extends javax.swing.JDialog {
         gridBagConstraints.gridy = 0;
         getContentPane().add(jLabel1, gridBagConstraints);
 
-        jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Dialog", 1, 18));
         jLabel2.setText("Intelligent Modular Audio Recognition Engine");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -73,6 +73,7 @@ public class AboutBox extends javax.swing.JDialog {
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel3.setText("<html><a href=\"http://www.imare.pl/\">www.imare.pl</a></html>");
+        jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel3MouseClicked(evt);
@@ -93,7 +94,6 @@ public class AboutBox extends javax.swing.JDialog {
         getContentPane().add(jLabel6, gridBagConstraints);
 
         jLabel7.setText("<html><div width=200><center>Marcin Radoszewski<br />\nPiotr Różański<br />\nMariusz Tycz<br />\nMaciej Włoch<br />\nBartosz Zasada</center></div></html>");
-        jLabel7.setMinimumSize(new java.awt.Dimension(200, 75));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
@@ -122,6 +122,7 @@ public class AboutBox extends javax.swing.JDialog {
         getContentPane().add(jLabel12, gridBagConstraints);
 
         jLabel13.setText("<html><a href=\"http://www.javazoom.net/javalayer/javalayer.html\">jLayer</a></html>");
+        jLabel13.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel13MouseClicked(evt);
@@ -133,7 +134,7 @@ public class AboutBox extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 5);
         getContentPane().add(jLabel13, gridBagConstraints);
 
-        jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Dialog", 1, 14));
         jLabel4.setText("<html>&copy;2010</html>");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
