@@ -86,6 +86,7 @@
                 <StringItem index="4" value="Flat top"/>
               </StringArray>
             </Property>
+            <Property name="selectedIndex" type="int" value="3"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">

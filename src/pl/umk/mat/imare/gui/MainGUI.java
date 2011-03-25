@@ -483,7 +483,8 @@ public class MainGUI extends javax.swing.JFrame {
             displayError(ex);
         }
 
-        try {
+        if (System.getProperty("java.vendor").startsWith("Sun") ||
+            System.getProperty("java.vendor").startsWith("Oracle")) try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
         } catch (ClassNotFoundException ex) {
         } catch (UnsupportedLookAndFeelException ex) {

@@ -130,8 +130,7 @@ public class RecognizerOptionsPanel extends javax.swing.JPanel {
     }
 
     public final void restoreDefaults() {
-        windowFunctionCombo.setSelectedIndex(0);
-
+        windowFunctionCombo.setSelectedIndex(3);
         timeMaxSeparationSlider.setValue(50);
         freqLowBoundSlider.setValue(110);
         freqHighBoundSlider.setValue(10000);
@@ -226,6 +225,7 @@ public class RecognizerOptionsPanel extends javax.swing.JPanel {
     windowFunctionPanel.add(jLabel4, new java.awt.GridBagConstraints());
 
     windowFunctionCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Dirichlet", "Blackman", "Blackman-Nutall", "Hamming", "Flat top" }));
+    windowFunctionCombo.setSelectedIndex(3);
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
     gridBagConstraints.weightx = 1.0;
