@@ -52,7 +52,7 @@
         <Component class="javax.swing.JButton" name="playButton">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/pl/umk/mat/imare/gui/gfx/play.png"/>
+              <Image iconType="3" name="/gfx/play.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Odtw&#xf3;rz plik"/>
           </Properties>
@@ -63,7 +63,7 @@
         <Component class="javax.swing.JButton" name="pauseButton">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/pl/umk/mat/imare/gui/gfx/pause.png"/>
+              <Image iconType="3" name="/gfx/pause.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Pauza"/>
             <Property name="enabled" type="boolean" value="false"/>
@@ -75,7 +75,7 @@
         <Component class="javax.swing.JButton" name="stopButton">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/pl/umk/mat/imare/gui/gfx/stop.png"/>
+              <Image iconType="3" name="/gfx/stop.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Stop"/>
             <Property name="enabled" type="boolean" value="false"/>
@@ -92,7 +92,7 @@
         <Component class="javax.swing.JButton" name="recognizeButton">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/pl/umk/mat/imare/gui/gfx/recognize.png"/>
+              <Image iconType="3" name="/gfx/recognize.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Rozpoznawanie..."/>
             <Property name="focusable" type="boolean" value="false"/>
@@ -126,7 +126,7 @@
         <Component class="javax.swing.JButton" name="fftButton">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/pl/umk/mat/imare/gui/gfx/fft.png"/>
+              <Image iconType="3" name="/gfx/fft.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Rysuj FFT"/>
             <Property name="focusable" type="boolean" value="false"/>
@@ -140,7 +140,7 @@
         <Component class="javax.swing.JButton" name="zoomIn">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/pl/umk/mat/imare/gui/gfx/zoom_in.png"/>
+              <Image iconType="3" name="/gfx/zoom_in.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Powi&#x119;ksz"/>
             <Property name="focusable" type="boolean" value="false"/>
@@ -154,7 +154,7 @@
         <Component class="javax.swing.JButton" name="zoomOut">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/pl/umk/mat/imare/gui/gfx/zoom_out.png"/>
+              <Image iconType="3" name="/gfx/zoom_out.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Pomniejsz"/>
             <Property name="focusable" type="boolean" value="false"/>

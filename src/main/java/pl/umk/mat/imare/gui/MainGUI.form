@@ -157,7 +157,7 @@
         <Component class="javax.swing.JButton" name="btnOpenWave">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/pl/umk/mat/imare/gui/gfx/open.png"/>
+              <Image iconType="3" name="/gfx/open.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Otw&#xf3;rz projekt"/>
             <Property name="focusable" type="boolean" value="false"/>
@@ -171,7 +171,7 @@
         <Component class="javax.swing.JButton" name="btnPreferences">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/pl/umk/mat/imare/gui/gfx/configure.png"/>
+              <Image iconType="3" name="/gfx/configure.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Preferencje..."/>
             <Property name="focusable" type="boolean" value="false"/>
@@ -185,7 +185,7 @@
         <Component class="javax.swing.JButton" name="btnAbout">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/pl/umk/mat/imare/gui/gfx/help.png"/>
+              <Image iconType="3" name="/gfx/help.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="O programie..."/>
             <Property name="focusable" type="boolean" value="false"/>

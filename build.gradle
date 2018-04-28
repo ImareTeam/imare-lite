@@ -1,0 +1,13 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = 'pl.umk.mat.imare.gui.MainGUI'
+
+repositories {
+  mavenLocal()
+  mavenCentral()
+}
+
+dependencies {
+  compile group: 'pl.umk.mat.imare', name: 'audio-recognition-library', version: '1.0.0'
+}

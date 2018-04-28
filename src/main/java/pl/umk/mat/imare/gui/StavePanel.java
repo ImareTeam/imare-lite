@@ -101,18 +101,18 @@ public class StavePanel extends javax.swing.JPanel {
                     noteImages = new BufferedImage [6];
 
 
-                    noteImages[0] = ImageIO.read(getClass().getResource("/pl/umk/mat/imare/gui/gfx/nuty/cala.png"));
-                    noteImages[1] = ImageIO.read(getClass().getResource("/pl/umk/mat/imare/gui/gfx/nuty/polnuta.png"));
-                    noteImages[2] = ImageIO.read(getClass().getResource("/pl/umk/mat/imare/gui/gfx/nuty/cwiercnuta.png"));
-                    noteImages[3] = ImageIO.read(getClass().getResource("/pl/umk/mat/imare/gui/gfx/nuty/osemka.png"));
-                    noteImages[4] = ImageIO.read(getClass().getResource("/pl/umk/mat/imare/gui/gfx/nuty/szesnastka.png"));
+                    noteImages[0] = ImageIO.read(getClass().getResource("/gfx/nuty/cala.png"));
+                    noteImages[1] = ImageIO.read(getClass().getResource("/gfx/nuty/polnuta.png"));
+                    noteImages[2] = ImageIO.read(getClass().getResource("/gfx/nuty/cwiercnuta.png"));
+                    noteImages[3] = ImageIO.read(getClass().getResource("/gfx/nuty/osemka.png"));
+                    noteImages[4] = ImageIO.read(getClass().getResource("/gfx/nuty/szesnastka.png"));
 					
-                    hashImage = ImageIO.read(getClass().getResource("/pl/umk/mat/imare/gui/gfx/nuty/krzyzyk.png"));
-					flatImage = ImageIO.read(getClass().getResource("/pl/umk/mat/imare/gui/gfx/nuty/flat.png"));
-					naturalImage = ImageIO.read(getClass().getResource("/pl/umk/mat/imare/gui/gfx/nuty/natural.png"));
+                    hashImage = ImageIO.read(getClass().getResource("/gfx/nuty/krzyzyk.png"));
+					flatImage = ImageIO.read(getClass().getResource("/gfx/nuty/flat.png"));
+					naturalImage = ImageIO.read(getClass().getResource("/gfx/nuty/natural.png"));
 
-					trebleClef = ImageIO.read(getClass().getResource("/pl/umk/mat/imare/gui/gfx/nuty/treble_clef.png"));
-					bassClef = ImageIO.read(getClass().getResource("/pl/umk/mat/imare/gui/gfx/nuty/bassclef.png"));
+					trebleClef = ImageIO.read(getClass().getResource("/gfx/nuty/treble_clef.png"));
+					bassClef = ImageIO.read(getClass().getResource("/gfx/nuty/bassclef.png"));
 		} catch (IOException ex) {
 			MainGUI.displayError(ex);
 		}

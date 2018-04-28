@@ -202,7 +202,7 @@ public class NotePanel extends javax.swing.JPanel implements MetaEventListener, 
 
     jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-    playButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/umk/mat/imare/gui/gfx/play.png"))); // NOI18N
+    playButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gfx/play.png"))); // NOI18N
     playButton.setPreferredSize(new java.awt.Dimension(27, 27));
     playButton.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -211,7 +211,7 @@ public class NotePanel extends javax.swing.JPanel implements MetaEventListener, 
     });
     jPanel1.add(playButton);
 
-    pauseButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/umk/mat/imare/gui/gfx/pause.png"))); // NOI18N
+    pauseButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gfx/pause.png"))); // NOI18N
     pauseButton.setEnabled(false);
     pauseButton.setPreferredSize(new java.awt.Dimension(27, 27));
     pauseButton.addActionListener(new java.awt.event.ActionListener() {
@@ -221,7 +221,7 @@ public class NotePanel extends javax.swing.JPanel implements MetaEventListener, 
     });
     jPanel1.add(pauseButton);
 
-    stopButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/umk/mat/imare/gui/gfx/stop.png"))); // NOI18N
+    stopButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gfx/stop.png"))); // NOI18N
     stopButton.setEnabled(false);
     stopButton.setPreferredSize(new java.awt.Dimension(27, 27));
     stopButton.addActionListener(new java.awt.event.ActionListener() {

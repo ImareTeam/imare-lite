@@ -156,7 +156,7 @@ public class WavePlayer extends javax.swing.JInternalFrame implements PlayListen
       toolBar.setFloatable(false);
       toolBar.setRollover(true);
 
-      playButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/umk/mat/imare/gui/gfx/play.png"))); // NOI18N
+      playButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gfx/play.png"))); // NOI18N
       playButton.setToolTipText("Odtwórz plik");
       playButton.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -165,7 +165,7 @@ public class WavePlayer extends javax.swing.JInternalFrame implements PlayListen
       });
       toolBar.add(playButton);
 
-      pauseButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/umk/mat/imare/gui/gfx/pause.png"))); // NOI18N
+      pauseButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gfx/pause.png"))); // NOI18N
       pauseButton.setToolTipText("Pauza");
       pauseButton.setEnabled(false);
       pauseButton.addActionListener(new java.awt.event.ActionListener() {
@@ -175,7 +175,7 @@ public class WavePlayer extends javax.swing.JInternalFrame implements PlayListen
       });
       toolBar.add(pauseButton);
 
-      stopButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/umk/mat/imare/gui/gfx/stop.png"))); // NOI18N
+      stopButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gfx/stop.png"))); // NOI18N
       stopButton.setToolTipText("Stop");
       stopButton.setEnabled(false);
       stopButton.setFocusable(false);
@@ -189,7 +189,7 @@ public class WavePlayer extends javax.swing.JInternalFrame implements PlayListen
       toolBar.add(stopButton);
       toolBar.add(jSeparator1);
 
-      recognizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/umk/mat/imare/gui/gfx/recognize.png"))); // NOI18N
+      recognizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gfx/recognize.png"))); // NOI18N
       recognizeButton.setToolTipText("Rozpoznawanie...");
       recognizeButton.setFocusable(false);
       recognizeButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -217,7 +217,7 @@ public class WavePlayer extends javax.swing.JInternalFrame implements PlayListen
       });
       toolBar.add(endTime);
 
-      fftButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/umk/mat/imare/gui/gfx/fft.png"))); // NOI18N
+      fftButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gfx/fft.png"))); // NOI18N
       fftButton.setToolTipText("Rysuj FFT");
       fftButton.setFocusable(false);
       fftButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -229,7 +229,7 @@ public class WavePlayer extends javax.swing.JInternalFrame implements PlayListen
       });
       toolBar.add(fftButton);
 
-      zoomIn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/umk/mat/imare/gui/gfx/zoom_in.png"))); // NOI18N
+      zoomIn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gfx/zoom_in.png"))); // NOI18N
       zoomIn.setToolTipText("Powiększ");
       zoomIn.setFocusable(false);
       zoomIn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -241,7 +241,7 @@ public class WavePlayer extends javax.swing.JInternalFrame implements PlayListen
       });
       toolBar.add(zoomIn);
 
-      zoomOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/umk/mat/imare/gui/gfx/zoom_out.png"))); // NOI18N
+      zoomOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gfx/zoom_out.png"))); // NOI18N
       zoomOut.setToolTipText("Pomniejsz");
       zoomOut.setFocusable(false);
       zoomOut.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);

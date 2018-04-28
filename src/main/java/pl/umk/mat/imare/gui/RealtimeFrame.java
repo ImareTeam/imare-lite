@@ -103,7 +103,7 @@ public class RealtimeFrame extends javax.swing.JInternalFrame implements RTListe
         toolBar.setFloatable(false);
         toolBar.setRollover(true);
 
-        recordButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/umk/mat/imare/gui/gfx/record.png"))); // NOI18N
+        recordButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gfx/record.png"))); // NOI18N
         recordButton.setFocusable(false);
         recordButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         recordButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -114,7 +114,7 @@ public class RealtimeFrame extends javax.swing.JInternalFrame implements RTListe
         });
         toolBar.add(recordButton);
 
-        stopRecordingButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/umk/mat/imare/gui/gfx/stop.png"))); // NOI18N
+        stopRecordingButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gfx/stop.png"))); // NOI18N
         stopRecordingButton.setFocusable(false);
         stopRecordingButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         stopRecordingButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
